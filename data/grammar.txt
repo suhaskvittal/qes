@@ -1,0 +1,29 @@
+# Start production
+NT_start = e 
+            | NT_line ";" NT_start
+            | "repeat" T_i_literal "{" NT_start "}" NT_start
+            ;
+# Line production
+NT_line = T_modifier NT_modifier NT_line
+        | NT_instruction NT_line
+        | e
+        ;
+
+# Instruction production
+NT_instruction = T_identifier NT_operands;
+
+# Annotation/Property production
+NT_modifier = "annotation" T_identifier
+            | "property" T_identifier NT_anyval
+            ;
+
+# Operands production
+NT_operands = T_i_literal NT_operands
+            | "," NT_operands
+            | e
+            ;
+
+# Any value production
+NT_anyval = T_i_literal
+            | T_f_literal
+            ;
