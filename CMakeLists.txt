@@ -14,15 +14,20 @@ endif()
 
 set(CMAKE_CXX_STANDARD 20)
 
-# Get grammar specification file for the LL parser.
-file(REAL_PATH data/grammar.txt LL_GRAMMAR_ABSOLUTE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+# Get data files for the grammar and lexer.
+file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/qasl_lexer.txt" QASL_LEXER_ABSOLUTE_PATH)
+file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/grammar_lexer.txt" GRAMMAR_LEXER_ABSOLUTE_PATH)
+file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/grammar.txt" LL_GRAMMAR_ABSOLUTE_PATH)
+
+message(STATUS "qasl lexer path = ${QASL_LEXER_ABSOLUTE_PATH}")
 
 # This is a really small library :p
 add_library(qasl src/lexer.cpp)
 target_compile_options(qasl PRIVATE ${COMPILE_OPTIONS})
 target_include_directories(qasl PUBLIC "src")
 
-target_compile_defintions(qasl PUBLIC LL_GRAMMAR_FILE=${LL_GRAMMAR_ABSOLUTE_PATH})
+target_compile_definitions(qasl PUBLIC 
+    QASL_LEXER_FILE="${QASL_LEXER_ABSOLUTE_PATH}")
 
 add_executable(test_lexer src/lexer.test.cpp)
 target_link_libraries(test_lexer PRIVATE qasl)

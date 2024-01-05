@@ -5,67 +5,87 @@
 
 #include "lexer.h"
 
-#include <map>
-#include <regex>
-#include <set>
+#include <fstream>
+
+#include <fcntl.h>
+#include <unistd.h>
 
 namespace qasl {
 
-#define PUT_TOKEN(t) std::make_pair(token_type::t, ""#t"")
+const token_type T_undefined = "undefined";
+const token_type T_empty = "empty";
 
-const std::map<token_type, std::string> TOKEN_TEXT_MAP{
-    PUT_TOKEN(KW_repeat),
-    PUT_TOKEN(T_identifier),
-    PUT_TOKEN(T_i_literal),
-    PUT_TOKEN(T_f_literal),
-    PUT_TOKEN(T_comma),
-    PUT_TOKEN(T_semicolon),
-    PUT_TOKEN(T_brace_open),
-    PUT_TOKEN(T_brace_close),
-    PUT_TOKEN(T_modifier),
-    PUT_TOKEN(T_whitespace),
-    PUT_TOKEN(T_comment)
-};
-
-#define PAIR(x, y) std::make_pair(token_type::x, std::regex(y))
-
-const std::map<token_type, std::regex> REGEX_MAP{
-    PAIR(KW_repeat, "repeat"),
-    PAIR(T_identifier, "[A-Za-z]+"),
-    PAIR(T_i_literal, R"_(\d+)_"),
-    PAIR(T_f_literal, R"_(\d*\.\d+|\d+\.\d*)_"),
-    PAIR(T_comma, ","),
-    PAIR(T_semicolon, ";"),
-    PAIR(T_brace_open, "\\("),
-    PAIR(T_brace_close, "\\)"),
-    PAIR(T_modifier, "@"),
-    PAIR(T_whitespace, R"_(\s+)_"),
-    PAIR(T_comment, R"_(#.*?\n)_")
-};
-
-const std::vector<token_type> TOKEN_ORDER{
-    token_type::KW_repeat,
-    token_type::T_identifier,
-    token_type::T_i_literal,
-    token_type::T_f_literal,
-    token_type::T_comma,
-    token_type::T_semicolon,
-    token_type::T_brace_open,
-    token_type::T_brace_close,
-    token_type::T_modifier,
-    token_type::T_whitespace,
-    token_type::T_comment
-};
-
-Lexer::Lexer()
-    :token_stack()
-{}
+Lexer::Lexer(std::string lexer_file)
+    :token_order(),
+    regex_map(),
+    token_ignore_set(),
+    token_stack()
+{
+    // Read tokens from token file.
+    if (faccessat(AT_FDCWD, lexer_file.c_str(), F_OK, 0) != 0) {
+        std::cerr << "[ qasl ] Lexer file \"" << lexer_file << "\" does not exist." << std::endl;
+        exit(1);
+    }
+    // Read the file in.
+    std::ifstream fin(lexer_file);
+    std::string ln;
+    // We need to identify the "tokens" in the line. Unfortunately, we can't exactly bootstrap the lexer
+    // with itself (chicken and egg situation).
+    std::vector<token_type> keywords;
+    std::vector<token_type> not_keywords;
+    while (std::getline(fin, ln)) {
+        bool ignore_token = false;
+        bool is_keyword = false;
+        bool started_reading_name = false;
+        bool started_reading_regex = false;
+        std::string token_name;
+        std::string token_regex;
+        for (size_t i = 0; i < ln.size(); i++) {
+            char c = ln[i];
+            if (!started_reading_name && (c == ' ' || c == '\t' || c == '\n')) continue;
+            started_reading_name = true;
+            if (started_reading_regex) {
+                if (c == ' ' || c == '\t' || c == '\n') continue;
+                token_regex.push_back(c);
+            } else {
+                if (c == ' ' || c == '\t' || c == '\n') {
+                    started_reading_regex = true;
+                } else {
+                    if (c == '*') is_keyword = true;
+                    else if (c == '^') ignore_token = true;
+                    else token_name.push_back(c);
+                }
+            }
+        }
+        if (token_name.empty()) continue;
+        // Check if the token is a literal.
+        if (is_keyword || token_regex.empty()) {
+            const std::string special_chars = R"_(*+[](){}.\^)_";
+            for (size_t i = 0; i < token_name.size(); i++) {
+                char c = token_name[i];
+                for (char x : special_chars) {
+                    if (c == x) { token_regex.push_back('\\'); break; }
+                }
+                token_regex.push_back(c);
+            }
+        }
+        // Update token_name with a prefix.
+        if (is_keyword) token_name = "KW_" + token_name;
+        // Update data structures.
+        if (is_keyword) keywords.push_back(token_name);
+        else            not_keywords.push_back(token_name);
+        regex_map[token_name] = std::regex(token_regex);
+        if (ignore_token) token_ignore_set.insert(token_name);
+    }
+    token_order = std::move(keywords);
+    token_order.insert(token_order.end(), not_keywords.begin(), not_keywords.end());
+}
 
 void
 Lexer::read_tokens_onto_stack(std::istream& input) {
     std::string prev_token;
     std::string curr_token;
-    token_type type = token_type::undefined;
+    token_type type = T_undefined;
 
     bool get_char = true;
     char c;
@@ -79,7 +99,7 @@ Lexer::read_tokens_onto_stack(std::istream& input) {
         get_char = false;
         // Recheck token regex.
         if (curr_token.size() > 0) {
-            for (token_type t : TOKEN_ORDER) {
+            for (token_type t : token_order) {
                 if (matches(curr_token, t)) {
                     type = t;
                     goto match_found;
@@ -87,22 +107,24 @@ Lexer::read_tokens_onto_stack(std::istream& input) {
             }
             // If nothing matches the token, then push back prev_token
             // onto the token_stack.
-            if (type == token_type::undefined) {
+            if (type == T_undefined) {
                 // Raise error and exit.
                 std::cerr << "Symbol \"" << prev_token << "\" could not be matched to any token." << std::endl;
                 exit(1);
             }
-            token_stack.push_back(std::make_tuple(type, prev_token));
+            if (!token_ignore_set.count(type)) {
+                token_stack.push_back(std::make_tuple(type, prev_token));
+            }
             // Reset curr_token to just c.
             curr_token.erase(0, prev_token.size());
-            type = token_type::undefined;
+            type = T_undefined;
             continue;
         }
 match_found:
         get_char = true;
     }
     // Place the existing token onto the stack.
-    if (type != token_type::undefined) {
+    if (type != T_undefined && !token_ignore_set.count(type)) {
         token_stack.push_back(std::make_tuple(type, curr_token));
     }
 }

@@ -1,0 +1,15 @@
+*repeat
+*annotation
+*property
+
+IDENTIFIER  [A-Za-z_]+
+I_LITERAL   \d+
+F_LITERAL   \d*\.\d+|\d+\.\d*
+^WHITESPACE  \s+
+^COMMENT     #.*?\n
+
+,
+;
+{
+}
+@

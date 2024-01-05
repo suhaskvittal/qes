@@ -26,8 +26,9 @@ bool is_nonterminal(token_type);
 
 class LLParser {
 public:
-    LLParser(std::vector<token_type>);
+    LLParser(std::string grammar_file);
 
+    void load_token_stack(std::vector<token_type>);
 private:
     void read_grammar(void);
     void compute_first_set(void);
