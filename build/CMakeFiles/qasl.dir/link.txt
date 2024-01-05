@@ -1,2 +1,0 @@
-/usr/bin/ar qc libqasl.a CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o
-/usr/bin/ranlib libqasl.a
