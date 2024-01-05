@@ -6,24 +6,14 @@
 #ifndef QASL_LEXER_h
 #define QASL_LEXER_h
 
+#include "qasl/util/token.h"
+
 #include <iostream>
 #include <regex>
 #include <set>
-#include <tuple>
 #include <vector>
 
 namespace qasl {
-
-typedef std::string token_type;
-// Each token has the following entries:
-//  (1) token_type
-//  (2) value (std::string)
-typedef std::tuple<token_type, std::string> Token;
-
-extern const token_type T_undefined;
-extern const token_type T_empty;
-
-std::string print_token(Token);
 
 // This is a general Lexer function, whose functionality
 // can be specified by the file pointed to by lexer_file

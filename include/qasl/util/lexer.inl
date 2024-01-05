@@ -7,11 +7,6 @@
 
 namespace qasl {
 
-inline std::string
-print_token(Token token) {
-    return std::get<0>(token) + "(" + std::get<1>(token) + ")";
-}
-
 inline bool
 Lexer::matches(std::string text, token_type t) {
     return std::regex_match(text, regex_map.at(t));

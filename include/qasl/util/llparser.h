@@ -6,7 +6,7 @@
 #ifndef QASL_LLPARSER_h
 #define QASL_LLPARSER_h
 
-#include "qasl/lang/lexer.h"
+#include "qasl/util/token.h"
 
 #include <map>
 #include <set>
@@ -15,18 +15,6 @@
 namespace qasl {
 
 // Grammar definitions:
-
-struct rule_t {
-    token_type              lhs = T_undefined;
-    std::vector<token_type> rhs;
-
-    bool operator==(const rule_t&);
-    bool operator<(const rule_t&);
-    
-    bool is_valid(void);
-};
-
-std::string print_rule(rule_t);
 
 // The LLParser implements an LLParser according
 // to the passed in grammar file. See data/qasl_grammar.txt
