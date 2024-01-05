@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/qasl.dir/src/lexer.cpp.o"
-  "CMakeFiles/qasl.dir/src/lexer.cpp.o.d"
+  "CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o"
+  "CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o.d"
   "libqasl.a"
   "libqasl.pdb"
 )

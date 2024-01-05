@@ -4,7 +4,7 @@
 # compile CXX with /opt/homebrew/bin/g++-13
 CXX_DEFINES = -DQASL_LEXER_FILE=\"/Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/data/qasl_lexer.txt\"
 
-CXX_INCLUDES = -I/Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src
+CXX_INCLUDES = -I/Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/include
 
 CXX_FLAGSarm64 = -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk -Ofast -fno-strict-aliasing -std=gnu++20
 

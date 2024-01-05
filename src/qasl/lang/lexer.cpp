@@ -3,7 +3,7 @@
  *  date:   3 January 2024
  * */
 
-#include "lexer.h"
+#include "qasl/lang/lexer.h"
 
 #include <fstream>
 

@@ -69,28 +69,28 @@ include CMakeFiles/qasl.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/qasl.dir/flags.make
 
-CMakeFiles/qasl.dir/src/lexer.cpp.o: CMakeFiles/qasl.dir/flags.make
-CMakeFiles/qasl.dir/src/lexer.cpp.o: ../src/lexer.cpp
-CMakeFiles/qasl.dir/src/lexer.cpp.o: CMakeFiles/qasl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/qasl.dir/src/lexer.cpp.o"
-	/opt/homebrew/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/qasl.dir/src/lexer.cpp.o -MF CMakeFiles/qasl.dir/src/lexer.cpp.o.d -o CMakeFiles/qasl.dir/src/lexer.cpp.o -c /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src/lexer.cpp
+CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o: CMakeFiles/qasl.dir/flags.make
+CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o: ../src/qasl/lang/lexer.cpp
+CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o: CMakeFiles/qasl.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o"
+	/opt/homebrew/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o -MF CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o.d -o CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o -c /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src/qasl/lang/lexer.cpp
 
-CMakeFiles/qasl.dir/src/lexer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/qasl.dir/src/lexer.cpp.i"
-	/opt/homebrew/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src/lexer.cpp > CMakeFiles/qasl.dir/src/lexer.cpp.i
+CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.i"
+	/opt/homebrew/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src/qasl/lang/lexer.cpp > CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.i
 
-CMakeFiles/qasl.dir/src/lexer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/qasl.dir/src/lexer.cpp.s"
-	/opt/homebrew/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src/lexer.cpp -o CMakeFiles/qasl.dir/src/lexer.cpp.s
+CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.s"
+	/opt/homebrew/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src/qasl/lang/lexer.cpp -o CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.s
 
 # Object files for target qasl
 qasl_OBJECTS = \
-"CMakeFiles/qasl.dir/src/lexer.cpp.o"
+"CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o"
 
 # External object files for target qasl
 qasl_EXTERNAL_OBJECTS =
 
-libqasl.a: CMakeFiles/qasl.dir/src/lexer.cpp.o
+libqasl.a: CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o
 libqasl.a: CMakeFiles/qasl.dir/build.make
 libqasl.a: CMakeFiles/qasl.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libqasl.a"

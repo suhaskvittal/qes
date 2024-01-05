@@ -1,6 +1,6 @@
-CMakeFiles/qasl.dir/src/lexer.cpp.o: \
- /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src/lexer.cpp \
- /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src/lexer.h \
+CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o: \
+ /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src/qasl/lang/lexer.cpp \
+ /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/include/qasl/lang/lexer.h \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/iostream \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/requires_hosted.h \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/aarch64-apple-darwin23/bits/c++config.h \
@@ -274,13 +274,11 @@ CMakeFiles/qasl.dir/src/lexer.cpp.o: \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_multiset.h \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/erase_if.h \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/vector \
- /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src/lexer.inl \
+ /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/include/qasl/lang/lexer.inl \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/fstream \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/aarch64-apple-darwin23/bits/basic_file.h \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/aarch64-apple-darwin23/bits/c++io.h \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/fstream.tcc \
- /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/map \
- /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_multimap.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/fcntl.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/sys/fcntl.h \
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/sys/_types/_o_sync.h \

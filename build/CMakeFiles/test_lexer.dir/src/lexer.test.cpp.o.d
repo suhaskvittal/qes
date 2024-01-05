@@ -1,6 +1,6 @@
 CMakeFiles/test_lexer.dir/src/lexer.test.cpp.o: \
  /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src/lexer.test.cpp \
- /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src/lexer.h \
+ /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/include/qasl/lang/lexer.h \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/iostream \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/requires_hosted.h \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/aarch64-apple-darwin23/bits/c++config.h \
@@ -274,4 +274,4 @@ CMakeFiles/test_lexer.dir/src/lexer.test.cpp.o: \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/stl_multiset.h \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/bits/erase_if.h \
  /opt/homebrew/Cellar/gcc/13.2.0/include/c++/13/vector \
- /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/src/lexer.inl
+ /Users/svittal/Documents/research/quantum/qon/qontra/dependencies/qasl/include/qasl/lang/lexer.inl

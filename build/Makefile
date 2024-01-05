@@ -142,30 +142,6 @@ test_lexer/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_lexer.dir/build.make CMakeFiles/test_lexer.dir/build
 .PHONY : test_lexer/fast
 
-src/lexer.o: src/lexer.cpp.o
-.PHONY : src/lexer.o
-
-# target to build an object file
-src/lexer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/qasl.dir/build.make CMakeFiles/qasl.dir/src/lexer.cpp.o
-.PHONY : src/lexer.cpp.o
-
-src/lexer.i: src/lexer.cpp.i
-.PHONY : src/lexer.i
-
-# target to preprocess a source file
-src/lexer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/qasl.dir/build.make CMakeFiles/qasl.dir/src/lexer.cpp.i
-.PHONY : src/lexer.cpp.i
-
-src/lexer.s: src/lexer.cpp.s
-.PHONY : src/lexer.s
-
-# target to generate assembly for a file
-src/lexer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/qasl.dir/build.make CMakeFiles/qasl.dir/src/lexer.cpp.s
-.PHONY : src/lexer.cpp.s
-
 src/lexer.test.o: src/lexer.test.cpp.o
 .PHONY : src/lexer.test.o
 
@@ -190,6 +166,30 @@ src/lexer.test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_lexer.dir/build.make CMakeFiles/test_lexer.dir/src/lexer.test.cpp.s
 .PHONY : src/lexer.test.cpp.s
 
+src/qasl/lang/lexer.o: src/qasl/lang/lexer.cpp.o
+.PHONY : src/qasl/lang/lexer.o
+
+# target to build an object file
+src/qasl/lang/lexer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/qasl.dir/build.make CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.o
+.PHONY : src/qasl/lang/lexer.cpp.o
+
+src/qasl/lang/lexer.i: src/qasl/lang/lexer.cpp.i
+.PHONY : src/qasl/lang/lexer.i
+
+# target to preprocess a source file
+src/qasl/lang/lexer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/qasl.dir/build.make CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.i
+.PHONY : src/qasl/lang/lexer.cpp.i
+
+src/qasl/lang/lexer.s: src/qasl/lang/lexer.cpp.s
+.PHONY : src/qasl/lang/lexer.s
+
+# target to generate assembly for a file
+src/qasl/lang/lexer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/qasl.dir/build.make CMakeFiles/qasl.dir/src/qasl/lang/lexer.cpp.s
+.PHONY : src/qasl/lang/lexer.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -200,12 +200,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... qasl"
 	@echo "... test_lexer"
-	@echo "... src/lexer.o"
-	@echo "... src/lexer.i"
-	@echo "... src/lexer.s"
 	@echo "... src/lexer.test.o"
 	@echo "... src/lexer.test.i"
 	@echo "... src/lexer.test.s"
+	@echo "... src/qasl/lang/lexer.o"
+	@echo "... src/qasl/lang/lexer.i"
+	@echo "... src/qasl/lang/lexer.s"
 .PHONY : help
 
 

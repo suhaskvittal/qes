@@ -3,8 +3,8 @@
  *  date:   4 January 2024
  * */
 
-#include "llparser.h"
-#include "lexer.h"
+#include "qasl/lang/lexer.h"
+#include "qasl/lang/llparser.h"
 
 #include <iostream>
 

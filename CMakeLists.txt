@@ -19,12 +19,10 @@ file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/qasl_lexer.txt" QASL_LEXER_ABSO
 file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/grammar_lexer.txt" GRAMMAR_LEXER_ABSOLUTE_PATH)
 file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/grammar.txt" LL_GRAMMAR_ABSOLUTE_PATH)
 
-message(STATUS "qasl lexer path = ${QASL_LEXER_ABSOLUTE_PATH}")
-
 # This is a really small library :p
-add_library(qasl src/lexer.cpp)
+add_library(qasl "src/qasl/lang/lexer.cpp")
 target_compile_options(qasl PRIVATE ${COMPILE_OPTIONS})
-target_include_directories(qasl PUBLIC "src")
+target_include_directories(qasl PUBLIC "include")
 
 target_compile_definitions(qasl PUBLIC 
     QASL_LEXER_FILE="${QASL_LEXER_ABSOLUTE_PATH}")
