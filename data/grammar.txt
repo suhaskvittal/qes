@@ -1,11 +1,11 @@
 # Start production
 start = 
-        | line ";" start
-        | "repeat" "(" I_LITERAL ")" "{" start "}" start
+        | line start
+        | KW_repeat "(" I_LITERAL ")" "{" start "}" start
         ;
 # Line production
 line = "@" modifier line
-        | instruction line
+        | instruction ";" line
         |
         ;
 
@@ -13,8 +13,8 @@ line = "@" modifier line
 instruction = IDENTIFIER operands ;
 
 # Annotation/Property production
-modifier =  "annotation" IDENTIFIER
-            | "property" IDENTIFIER anyval
+modifier =  KW_annotation IDENTIFIER
+            | KW_property IDENTIFIER anyval
             ;
 
 # Operands production

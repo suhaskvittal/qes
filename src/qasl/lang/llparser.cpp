@@ -116,11 +116,10 @@ LLParser::parse(std::vector<Token> tokens) {
                 }
             }
             parsing_stack.insert(parsing_stack.end(), r.rhs.rbegin(), r.rhs.rend());
-            std::cout << "[ NT = " << sym << " ] on token \"" << print_token(tok)
-                << "\", executing rule \"" << print_rule(r) << "\"\n";
         } else {
             // Match the token to the stack symbol.
             if (type == sym) {
+                std::cout << "**** MATCHED \"" << value << " to terminal \"" << sym << "\"\n";
                 it++;
             } else {
                 std::cerr << "[ qasl ] parsing error: mismatched token \"" << print_token(tok)

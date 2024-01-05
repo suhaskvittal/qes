@@ -5,13 +5,18 @@
 
 #include <qasl/lang/llparser.h>
 
+#include <fstream>
+#include <iostream>
+
 using namespace qasl;
 
 int main(int argc, char* argv[]) {
-    std::string text(argv[1]);
+    std::string input_file(argv[1]);
+
+    std::ifstream fin(input_file);
 
     Lexer lexer(QASL_LEXER_FILE);
-    lexer.read_tokens(text);
+    lexer.read_tokens(fin);
 
     LLParser parser(QASL_LL_GRAMMAR_FILE);
 
