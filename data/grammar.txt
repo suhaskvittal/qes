@@ -1,7 +1,7 @@
 # Start production
 start = 
         | line ";" start
-        | "repeat" I_LITERAL "{" start "}" start
+        | "repeat" "(" I_LITERAL ")" "{" start "}" start
         ;
 # Line production
 line = "@" modifier line
@@ -10,7 +10,7 @@ line = "@" modifier line
         ;
 
 # Instruction production
-instruction = "@" operands ;
+instruction = IDENTIFIER operands ;
 
 # Annotation/Property production
 modifier =  "annotation" IDENTIFIER
@@ -27,3 +27,4 @@ operands =  I_LITERAL operands
 anyval = I_LITERAL
             | F_LITERAL
             ;
+

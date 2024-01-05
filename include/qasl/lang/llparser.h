@@ -3,7 +3,10 @@
  *  date:   4 January 2024
  * */
 
-#include "qasl.h"
+#ifndef QASL_LLPARSER_h
+#define QASL_LLPARSER_h
+
+#include "qasl/lang/lexer.h"
 
 #include <map>
 #include <set>
@@ -14,11 +17,13 @@ namespace qasl {
 // Grammar definitions:
 
 struct rule_t {
-    token_type              lhs;
+    token_type              lhs = T_undefined;
     std::vector<token_type> rhs;
 
     bool operator==(const rule_t&);
     bool operator<(const rule_t&);
+    
+    bool is_valid(void);
 };
 
 bool is_terminal(token_type);
@@ -29,8 +34,9 @@ public:
     LLParser(std::string grammar_file);
 
     void load_token_stack(std::vector<token_type>);
+
+    std::vector<rule_t> get_grammar(void);
 private:
-    void read_grammar(void);
     void compute_first_set(void);
         
     std::map<token_type, std::set<token_type>> first;
@@ -41,3 +47,7 @@ private:
 };
 
 }   // qasl
+
+#include "llparser.inl"
+
+#endif  // QASL_LLPARSER_h

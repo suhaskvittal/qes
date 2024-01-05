@@ -60,7 +60,7 @@ Lexer::Lexer(std::string lexer_file)
         if (token_name.empty()) continue;
         // Check if the token is a literal.
         if (is_keyword || token_regex.empty()) {
-            const std::string special_chars = R"_(*+[](){}.\^)_";
+            const std::string special_chars = R"_(*+[](){}.\|^)_";
             for (size_t i = 0; i < token_name.size(); i++) {
                 char c = token_name[i];
                 for (char x : special_chars) {
@@ -89,9 +89,9 @@ Lexer::read_tokens_onto_stack(std::istream& input) {
 
     bool get_char = true;
     char c;
-    while (!input.eof()) {
-        prev_token = curr_token;
+    while (!input.eof() || !get_char) {
         // Update curr token.
+        prev_token = curr_token;
         if (get_char) {
             c = input.get();
             curr_token.push_back(c);
@@ -108,12 +108,12 @@ Lexer::read_tokens_onto_stack(std::istream& input) {
             // If nothing matches the token, then push back prev_token
             // onto the token_stack.
             if (type == T_undefined) {
-                // Raise error and exit.
-                std::cerr << "Symbol \"" << prev_token << "\" could not be matched to any token." << std::endl;
-                exit(1);
-            }
-            if (!token_ignore_set.count(type)) {
-                token_stack.push_back(std::make_tuple(type, prev_token));
+                // Then this is fine to not match -- get the next character.
+                goto match_found;
+            } else {
+                if (!token_ignore_set.count(type)) {
+                    token_stack.push_back(std::make_tuple(type, prev_token));
+                }
             }
             // Reset curr_token to just c.
             curr_token.erase(0, prev_token.size());
@@ -124,8 +124,10 @@ match_found:
         get_char = true;
     }
     // Place the existing token onto the stack.
-    if (type != T_undefined && !token_ignore_set.count(type)) {
-        token_stack.push_back(std::make_tuple(type, curr_token));
+    if (curr_token.size() > 0) {
+        if (type != T_undefined && !token_ignore_set.count(type)) {
+            token_stack.push_back(std::make_tuple(type, curr_token));
+        }
     }
 }
 

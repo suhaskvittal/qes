@@ -17,15 +17,20 @@ set(CMAKE_CXX_STANDARD 20)
 # Get data files for the grammar and lexer.
 file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/qasl_lexer.txt" QASL_LEXER_ABSOLUTE_PATH)
 file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/grammar_lexer.txt" GRAMMAR_LEXER_ABSOLUTE_PATH)
-file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/grammar.txt" LL_GRAMMAR_ABSOLUTE_PATH)
+file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/grammar.txt" QASL_LL_GRAMMAR_ABSOLUTE_PATH)
 
 # This is a really small library :p
-add_library(qasl "src/qasl/lang/lexer.cpp")
+add_library(qasl "src/qasl/lang/lexer.cpp" "src/qasl/lang/llparser.cpp")
 target_compile_options(qasl PRIVATE ${COMPILE_OPTIONS})
 target_include_directories(qasl PUBLIC "include")
 
 target_compile_definitions(qasl PUBLIC 
-    QASL_LEXER_FILE="${QASL_LEXER_ABSOLUTE_PATH}")
+    QASL_LEXER_FILE="${QASL_LEXER_ABSOLUTE_PATH}"
+    GRAMMAR_LEXER_FILE="${GRAMMAR_LEXER_ABSOLUTE_PATH}"
+    QASL_LL_GRAMMAR_FILE="${QASL_LL_GRAMMAR_ABSOLUTE_PATH}")
 
 add_executable(test_lexer src/lexer.test.cpp)
 target_link_libraries(test_lexer PRIVATE qasl)
+
+add_executable(test_llparser src/llparser.test.cpp)
+target_link_libraries(test_llparser PRIVATE qasl)
