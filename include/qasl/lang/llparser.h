@@ -28,11 +28,32 @@ struct rule_t {
 
 std::string print_rule(rule_t);
 
+// The LLParser implements an LLParser according
+// to the passed in grammar file. See data/qasl_grammar.txt
+// for examples. At a high level:
+//      A production rule can be declared as follows:
+//          <nonterminal> = <rule1> | <rule2> | ... | <rulek>;
+//      One of these nonterminals must be called "start".
+//
+//      Terminals used in the productions must match those
+//      used by the Lexer (if one is used). If a keyword
+//      terminal is used, make sure to prefix the keyword
+//      with KW_<keyword>.
 class LLParser {
 public:
     LLParser(std::string grammar_file);
 
-    void    parse(std::vector<Token>);
+    // parse is the main parsing function that parses a 
+    // sequence of Tokens (which can be retrieved from a 
+    // Lexer). The function is generic, and a callback_manager
+    // can be used to interact with the parser.
+    // The callback_manager should implement two functions:
+    //      (1) recv_token(Token). Upon matching a token to
+    //          a symbol on the parsing stack, this will be called.
+    //      (2) recv_rule(rule_t). Upon using a rule, this
+    //          will be called.
+    template <class T>
+    void parse(std::vector<Token>, T& callback_manager);
 
     void    compute_first_and_follow_sets(void);
     rule_t  get_rule(token_type, token_type);

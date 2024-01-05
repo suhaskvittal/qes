@@ -25,16 +25,28 @@ extern const token_type T_empty;
 
 std::string print_token(Token);
 
-// This is a simple lexer for Qasl. It is flexible,
-// in that in lexer.cpp, any of the regex can be
-// modified, and QaslLexer will work corresponding,
-// provided the regex is valid.
+// This is a general Lexer function, whose functionality
+// can be specified by the file pointed to by lexer_file
+// in the constructor. See data/qasl_lexer.txt for examples.
+// At a high level:
+//      Token types (terminals for the parser) are specified as
+//          <TOKEN_TYPE>    <REGEX>
+//      If the token is its own regex (i.e. semicolons), they
+//      can simply be declared as
+//          <TOKEN_TYPE>
+//      with no regex. Finally, if the token is a keyword, this
+//      can also be declared with
+//          *<TOKEN_TYPE>
 class Lexer {
 public:
     Lexer(std::string lexer_file);
 
     bool matches(std::string, token_type);
 
+    // read_tokens is the function that perform lexical_analysis.
+    // Passing in a std::string analyzes that string, whereas
+    // the std::istream& is more general, and can be used with
+    // file input streams.
     void read_tokens(std::string);
     void read_tokens(std::istream&);
 

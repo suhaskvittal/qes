@@ -17,7 +17,7 @@ set(CMAKE_CXX_STANDARD 20)
 # Get data files for the grammar and lexer.
 file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/qasl_lexer.txt" QASL_LEXER_ABSOLUTE_PATH)
 file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/grammar_lexer.txt" GRAMMAR_LEXER_ABSOLUTE_PATH)
-file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/grammar.txt" QASL_LL_GRAMMAR_ABSOLUTE_PATH)
+file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/qasl_grammar.txt" QASL_LL_GRAMMAR_ABSOLUTE_PATH)
 
 # This is a really small library :p
 add_library(qasl "src/qasl/lang/lexer.cpp" "src/qasl/lang/llparser.cpp")
