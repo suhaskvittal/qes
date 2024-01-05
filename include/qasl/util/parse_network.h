@@ -17,14 +17,15 @@ namespace qasl {
 
 template <class T> using sptr=std::shared_ptr<T>;
 
+// parse_node_t has been templated with a UNION_TYPE
+// that refers to, indeed, a union (specifically some
+// form of std::variant). This is so that the user
+// can control what data exists in each node (and
+// indeed different nodes may want different data).
+template <class UNION_TYPE>
 struct parse_node_t {
     token_type  symbol;
-    union {
-        int64_t     si;
-        uint64_t    ui;
-        double      fp;
-        std::string str;
-    } data;
+    UNION_TYPE  data;
     bool data_has_been_assigned = false;
     // Pointers to parent and children:
     sptr<parse_node_t>              parent = nullptr;
@@ -39,6 +40,7 @@ struct parse_node_t {
 // After the ParseNetwork is construct upon completing
 // parse, a user can simply analyze the ParseNetwork to
 // extract data.
+template <class T>
 class ParseNetwork {
 public:
     ParseNetwork();
@@ -50,10 +52,10 @@ public:
     // traversing using the parent pointers.
     template <class FUNC> void apply_callback_bottom_up(FUNC);
 
-    sptr<parse_node_t>              root;
-    std::vector<sptr<parse_node_t>> leaves;
+    sptr<parse_node_t<T>>              root;
+    std::vector<sptr<parse_node_t<T>>> leaves;
 private:
-    sptr<parse_node_t>  make_node(token_type);
+    sptr<parse_node_t<T>>  make_node(token_type);
 };
 
 }   // qasl
