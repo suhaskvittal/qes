@@ -35,16 +35,16 @@ public:
 
     bool matches(std::string, token_type);
 
-    void read_tokens_onto_stack(std::string);
-    void read_tokens_onto_stack(std::istream&);
+    void read_tokens(std::string);
+    void read_tokens(std::istream&);
 
-    std::vector<Token> get_token_stack(void);
+    std::vector<Token> get_tokens(void);
 private:
     std::vector<token_type>             token_order;
     std::map<token_type, std::regex>    regex_map;
     std::set<token_type>                token_ignore_set;
 
-    std::vector<Token> token_stack;
+    std::vector<Token> tokens;
 };
 
 }   // qasl

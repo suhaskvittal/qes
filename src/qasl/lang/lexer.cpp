@@ -19,7 +19,7 @@ Lexer::Lexer(std::string lexer_file)
     :token_order(),
     regex_map(),
     token_ignore_set(),
-    token_stack()
+    tokens()
 {
     // Read tokens from token file.
     if (faccessat(AT_FDCWD, lexer_file.c_str(), F_OK, 0) != 0) {
@@ -82,7 +82,7 @@ Lexer::Lexer(std::string lexer_file)
 }
 
 void
-Lexer::read_tokens_onto_stack(std::istream& input) {
+Lexer::read_tokens(std::istream& input) {
     std::string prev_token;
     std::string curr_token;
     token_type type = T_undefined;
@@ -106,13 +106,13 @@ Lexer::read_tokens_onto_stack(std::istream& input) {
                 }
             }
             // If nothing matches the token, then push back prev_token
-            // onto the token_stack.
+            // onto the tokens.
             if (type == T_undefined) {
                 // Then this is fine to not match -- get the next character.
                 goto match_found;
             } else {
                 if (!token_ignore_set.count(type)) {
-                    token_stack.push_back(std::make_tuple(type, prev_token));
+                    tokens.push_back(std::make_tuple(type, prev_token));
                 }
             }
             // Reset curr_token to just c.
@@ -126,7 +126,7 @@ match_found:
     // Place the existing token onto the stack.
     if (curr_token.size() > 0) {
         if (type != T_undefined && !token_ignore_set.count(type)) {
-            token_stack.push_back(std::make_tuple(type, curr_token));
+            tokens.push_back(std::make_tuple(type, curr_token));
         }
     }
 }

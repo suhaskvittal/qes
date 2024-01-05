@@ -26,24 +26,35 @@ struct rule_t {
     bool is_valid(void);
 };
 
-bool is_terminal(token_type);
-bool is_nonterminal(token_type);
+std::string print_rule(rule_t);
 
 class LLParser {
 public:
     LLParser(std::string grammar_file);
 
-    void load_token_stack(std::vector<token_type>);
+    void    parse(std::vector<Token>);
+
+    void    compute_first_and_follow_sets(void);
+    rule_t  get_rule(token_type, token_type);
+
+    bool                    is_nonterminal(token_type);
+    std::set<token_type>    get_nonterminals(void);
+
+    std::set<token_type>&   first(token_type);
+    std::set<token_type>&   first(std::vector<token_type>);
+
+    std::set<token_type>&   follow(token_type);
+    std::set<token_type>&   follow(std::vector<token_type>);
 
     std::vector<rule_t> get_grammar(void);
 private:
-    void compute_first_set(void);
-        
-    std::map<token_type, std::set<token_type>> first;
-    std::map<token_type, std::set<token_type>> follow;
-
-    std::vector<token_type> token_stack;
     std::vector<rule_t> grammar;
+    std::set<token_type> nonterminals;
+        
+    std::map<std::vector<token_type>, std::set<token_type>> first_map;
+    std::map<std::vector<token_type>, std::set<token_type>> follow_map;
+
+    std::map<token_type, std::map<token_type, int>> parsing_table;
 };
 
 }   // qasl

@@ -5,6 +5,7 @@
 
 #include "qasl/lang/llparser.h"
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 
@@ -14,10 +15,10 @@
 namespace qasl {
 
 LLParser::LLParser(std::string grammar_file) 
-    :first(),
-    follow(),
-    token_stack(),
-    grammar()
+    :grammar(),
+    nonterminals(),
+    first_map(),
+    follow_map()
 {
 #ifndef GRAMMAR_LEXER_FILE
     std::cerr << "[ qasl ] Macro GRAMMAR_LEXER_FILE is unset." << std::endl;
@@ -32,13 +33,13 @@ LLParser::LLParser(std::string grammar_file)
     Lexer grammar_lexer(GRAMMAR_LEXER_FILE);
     // Read grammar file.
     std::ifstream fin(grammar_file);
-    grammar_lexer.read_tokens_onto_stack(fin);
+    grammar_lexer.read_tokens(fin);
     // Now, like with Lexer, we can't really parse the tokens because we don't
     // have a Parser yet. Fortunately, the grammar file (should be) parsable by
     // simply reading the tokens in order.
     bool reading_rule = false;
     rule_t current_rule;
-    for (Token tok : grammar_lexer.get_token_stack()) {
+    for (Token tok : grammar_lexer.get_tokens()) {
         token_type type = std::get<0>(tok);
         std::string value = std::get<1>(tok);
         
@@ -57,6 +58,9 @@ LLParser::LLParser(std::string grammar_file)
                 if (current_rule.rhs.empty()) current_rule.rhs.push_back(T_empty);
                 grammar.push_back(current_rule);
                 if (type == ";") {
+                    // Update non-terminal list.
+                    nonterminals.insert(current_rule.lhs);
+                    // Prepare to read the next nonterminal's rule.
                     current_rule.lhs = T_undefined;
                     reading_rule = false;
                 }
@@ -79,43 +83,107 @@ LLParser::LLParser(std::string grammar_file)
             }
         }
     }
+    compute_first_and_follow_sets();
 }
 
 void
-LLParser::compute_first_set() {
-    std::map<std::vector<token_type>, std::set<token_type>> _first;
+LLParser::parse(std::vector<Token> tokens) {
+    std::vector<token_type> parsing_stack{"$", "start"};
 
-    bool first_has_changed;
-    do {
-        for (rule_t& r : grammar) {
-            token_type nt = r.lhs;
-            std::vector<token_type> rule_string = r.rhs;
+    auto it = tokens.begin();
 
-            token_type x = rule_string[0];
-            if (is_terminal(x)) {
-                _first[rule_string] = {x};
-            } else if (is_nonterminal(x) && first[x].count(T_empty)) {
-                std::set<token_type> s(first[x]);
-                s.erase(T_empty);
+    while (parsing_stack.size() && it != tokens.end()) {
+        Token tok = *it;
+        token_type type = std::get<0>(tok);
+        std::string value = std::get<1>(tok);
 
-                std::vector<token_type> sub(rule_string.begin()+1, rule_string.end());
-                s.insert(_first[sub].begin(), _first[sub].end());
-
-                _first[rule_string] = s;
-            } else if (is_nonterminal(x)) {
-                _first[{x}] = first[x];
+        token_type sym = parsing_stack.back();
+        parsing_stack.pop_back();
+        if (sym == T_empty) continue; // This is auto matched.
+        if (sym == "$") {
+            std::cerr << "[ qasl ] parsing error: unexpectedly hit bottom of the stack ($)" << std::endl;
+            exit(1);
+        } else if (is_nonterminal(sym)) {
+            // Push new entries on stack according to rule.
+            rule_t r = get_rule(sym, type);
+            if (r.lhs == T_undefined) {
+                // Try again, with the second argument being T_empty
+                r = get_rule(sym, T_empty);
+                if (r.lhs == T_undefined) {
+                    std::cerr << "[ qasl ] parsing error: failed to get rule for nonterminal "
+                        << "\"" << sym << "\" and terminal \"" << type << "\"" << std::endl;
+                    exit(1);
+                }
+            }
+            parsing_stack.insert(parsing_stack.end(), r.rhs.rbegin(), r.rhs.rend());
+            std::cout << "[ NT = " << sym << " ] on token \"" << print_token(tok)
+                << "\", executing rule \"" << print_rule(r) << "\"\n";
+        } else {
+            // Match the token to the stack symbol.
+            if (type == sym) {
+                it++;
             } else {
-                _first[{x}] = { T_empty };
+                std::cerr << "[ qasl ] parsing error: mismatched token \"" << print_token(tok)
+                    << "\" as terminal of type \"" << sym << "\"" << std::endl;
+                exit(1);
             }
         }
-        // Update the first sets.
-        first_has_changed = false;
+    }
+}
+
+void
+LLParser::compute_first_and_follow_sets() {
+    follow("start") = { "$" };
+
+    bool any_has_changed;
+    do {
+        any_has_changed = false;
         for (rule_t& r : grammar) {
-            size_t prev_size = first[r.lhs].size();
-            first[r.lhs].insert(_first[r.rhs].begin(), _first[r.rhs].end());
-            first_has_changed |= prev_size != first[r.lhs].size();
+            for (auto it = r.rhs.begin(); it != r.rhs.end(); it++) {
+                std::vector<token_type> first_string(it, r.rhs.end());
+                // Get first sets:
+                auto& fis = first(first_string);
+                std::set<token_type> fis_prev(fis);
+                if (is_nonterminal(*it)) {
+                    // Get the suffix after *it.
+                    std::vector<token_type> suffix(it+1, r.rhs.end());
+                    if (suffix.size() == 0) suffix.push_back(T_empty);
+                    // Update first sets:
+                    if (first(*it).count(T_empty)) {
+                        std::set<token_type> s(first(*it));
+                        s.erase(T_empty);
+                        s.insert(first(suffix).begin(), first(suffix).end());
+                        fis = s;
+                    } else {
+                        fis = first(*it);
+                    }
+                    // Now, get and update follow sets (only for NTs):
+                    auto& fos = follow(*it);
+                    std::set<token_type> fos_prev(fos);
+                    // Now, update follow based on the suffix.
+                    if (suffix.empty() || first(r.lhs).count(T_empty)) {
+                        fos.insert(follow(r.lhs).begin(), follow(r.lhs).end());
+                    } 
+                    for (token_type x : first(suffix)) {
+                        if (!is_nonterminal(x) && x != T_empty) {
+                            fos.insert(x);
+                        }
+                    }
+
+                    any_has_changed |= fos != fos_prev;
+                } else if (*it != T_empty) {
+                    // If *it is a terminal, then it is a simple update to fis.
+                    fis = { *it };
+                } else if (*it == T_empty && first_string.size() == 1) {
+                    fis = { T_empty };
+                }
+                any_has_changed |= fis != fis_prev;
+            }
+            size_t prev_fis_size = first(r.lhs).size();
+            first(r.lhs).insert(first(r.rhs).begin(), first(r.rhs).end());
+            any_has_changed |= first(r.lhs).size() > prev_fis_size;
         }
-    } while (first_has_changed);
+    } while (any_has_changed);
 }
 
 }   // qasl

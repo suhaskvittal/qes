@@ -18,14 +18,14 @@ Lexer::matches(std::string text, token_type t) {
 }
 
 inline void
-Lexer::read_tokens_onto_stack(std::string text) {
+Lexer::read_tokens(std::string text) {
     std::istringstream iss(text);
-    read_tokens_onto_stack(iss);
+    read_tokens(iss);
 }
 
 inline std::vector<Token>
-Lexer::get_token_stack() {
-    return token_stack;
+Lexer::get_tokens() {
+    return tokens;
 }
 
 }   // qasl
