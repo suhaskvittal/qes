@@ -46,7 +46,7 @@ Instruction<T, U>::Instruction(std::string name, std::vector<X> _operands)
     operands(_operands.size())
 {
     for (size_t i = 0; i < _operands.size(); i++) {
-        std::get<X>(operands[i]) = _operands[i];
+        operands[i] = _operands[i];
     }
 }
 
@@ -155,8 +155,8 @@ print_inst(const Instruction<T, U>& inst, bool print_inline) {
         sout << whitespace;
     }
     // Finally dump the instruction contents
-    sout << inst.get_name();
-    bool first = false;
+    sout << inst.get_name() << "\t";
+    bool first = true;
     for (U op : inst.get_operands()) {
         if (!first) sout << ", ";
         first = false;
@@ -169,8 +169,9 @@ print_inst(const Instruction<T, U>& inst, bool print_inline) {
 template <class T, class U> inline std::string
 print_prog(const Program<T, U>& program) {
     std::string out;
-    for (const auto& inst : program) {
-        out += print_inst(inst, false) + "\n";
+    for (size_t i = 0; i < program.size(); i++) {
+        if (i > 0) out += "\n";
+        out += print_inst(program.at(i), false);
     }
     return out;
 }

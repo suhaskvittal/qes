@@ -17,17 +17,18 @@ p_I_LITERAL(sptr<QaslParseNode> x) {
     x->data.operand_id = ui;
     x->data.repeat_count = ui;
 
-    std::get<int64_t>(x->data.anyval) = static_cast<int64_t>(ui);
+    x->data.anyval = static_cast<int64_t>(ui);
 }
 
 inline void
 p_F_LITERAL(sptr<QaslParseNode> x) {
     const double fp = std::stod(x->tmp_data);
-    std::get<double>(x->data.anyval) = fp;
+    x->data.anyval = fp;
 }
 
 inline void
 p_start(sptr<QaslParseNode> x) {
+    if (x->children.empty() || x->children[0]->symbol == T_empty) return;
     Program<> prog;
 
     Program<> tail = std::move(x->children.back()->data.inst_block);
@@ -61,12 +62,13 @@ p_line(sptr<QaslParseNode> x) {
         inst = std::move(x->children[2]->data.inst);
         // Update annotations and properties.
         auto mc = x->children[1];
-        for (annotation_t a : mc->data.annotation_set)  x->data.inst.put(a);
-        for (auto p : mc->data.property_map)            x->data.inst.put(p.first, p.second);
+        for (annotation_t a : mc->data.annotation_set)  inst.put(a);
+        for (auto p : mc->data.property_map)            inst.put(p.first, p.second);
     } else {
         // This is a simple instruction.
         inst = std::move(x->children[0]->data.inst);
     }
+    x->data.inst = std::move(inst);
 }
 
 inline void

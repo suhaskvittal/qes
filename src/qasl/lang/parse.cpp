@@ -17,7 +17,7 @@
 
 namespace qasl {
 
-#define PUT(sym)    std::make_pair(" #sym ", &p_##sym)
+#define PUT(sym)    std::make_pair( #sym , &p_##sym)
 
 static const std::map<std::string, void(*)(sptr<QaslParseNode>)> 
     PARSE_FUNCTION_TABLE{

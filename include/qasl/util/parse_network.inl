@@ -43,6 +43,9 @@ ParseNetwork<T>::recv_rule(rule_t r) {
         new_leaves.push_back(x);
     }
     leaves = std::move(new_leaves);
+    std::cout << "new leaves:";
+    for (auto x : leaves) std::cout << " " << x->symbol;
+    std::cout << "\n";
 }
 
 template <class T> inline void
@@ -58,17 +61,30 @@ ParseNetwork<T>::recv_token(Token tok) {
             return;
         }
     }
+    std::cerr << "could not find leaf for token " << print_token(tok) << "\n";
 }
 
 template <class T>
 template <class FUNC> inline void
 ParseNetwork<T>::apply_callback_bottom_up(FUNC fn) {
     std::deque<sptr<parse_node_t<T>>> node_list(leaves.begin(), leaves.end());
+    std::set<sptr<parse_node_t<T>>> ready;
     while (node_list.size()) {
         sptr<parse_node_t<T>> x = node_list.front();
         node_list.pop_front();
+        if (ready.count(x)) continue;
+        // Check if all children are ready.
+        bool is_ready = true;
+        for (auto c : x->children) {
+            if (!ready.count(c)) {
+                is_ready = false;
+                break;
+            }
+        }
+        if (!is_ready) continue;
         // Call function:
         fn(x);
+        ready.insert(x);
         // Append parent to list:
         if (x->parent != nullptr) node_list.push_back(x->parent);
     }

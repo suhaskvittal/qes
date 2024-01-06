@@ -1,0 +1,54 @@
+# D = 2 Rotated Surface Code Memory X
+#
+# (pass)
+#
+#       0 --- 1
+#     4 |  5  | 6
+#       2 --- 3
+
+reset 0, 1, 2, 3;
+h 0, 1, 2, 3;
+
+# Preparation
+
+@annotation timing_error
+reset 4, 5, 6;
+
+h 5;
+cx 2, 4, 5, 3;
+cx 0, 4, 5, 2;
+cx 3, 6, 5, 1;
+cx 1, 6, 5, 0;
+h 5;
+
+measure 4, 5, 6;
+event 0, 1;
+
+# Syndrome Extraction
+
+repeat (6) {
+
+@annotation timing_error
+reset 4, 5, 6;
+
+h 5;
+cx 2, 4, 5, 3;
+cx 0, 4, 5, 2;
+cx 3, 6, 5, 1;
+cx 1, 6, 5, 0;
+h 5;
+
+measure 4, 5, 6;
+event 1, 1, 4;
+
+mshft 3;
+
+}
+
+h 0, 1, 2, 3;
+measure 0, 1, 2, 3;
+
+event 2, 4, 6, 7, 8, 9;
+
+obs 6, 7;
+
