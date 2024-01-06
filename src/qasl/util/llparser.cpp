@@ -3,15 +3,13 @@
  *  date:   4 January 2024
  * */
 
+#include "qasl/errors.h"
 #include "qasl/util/lexer.h"
 #include "qasl/util/llparser.h"
 
 #include <algorithm>
 #include <fstream>
 #include <iostream>
-
-#include <fcntl.h>
-#include <unistd.h>
 
 namespace qasl {
 
@@ -22,15 +20,11 @@ LLParser::LLParser(std::string grammar_file)
     follow_map()
 {
 #ifndef GRAMMAR_LEXER_FILE
-    std::cerr << "[ qasl ] Macro GRAMMAR_LEXER_FILE is unset." << std::endl;
-    exit(1);
+    exit_macro_does_not_exist("GRAMMAR_LEXER_FILE");
 #endif
     // Check if LL_GRAMMAR_FILE exists.
-    if (faccessat(AT_FDCWD, GRAMMAR_LEXER_FILE, F_OK, 0) != 0) {
-        std::cerr << "[ qasl ] GRAMMAR_LEXER_FILE \"" << GRAMMAR_LEXER_FILE
-                << "\" does not exist." << std::endl;
-        exit(1);
-    }
+    test_file_exists(GRAMMAR_LEXER_FILE, "GRAMMAR_LEXER_FILE");
+
     Lexer grammar_lexer(GRAMMAR_LEXER_FILE);
     // Read grammar file.
     std::ifstream fin(grammar_file);

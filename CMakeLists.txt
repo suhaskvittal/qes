@@ -19,8 +19,12 @@ file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/qasl_lexer.txt" QASL_LEXER_ABSO
 file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/grammar_lexer.txt" GRAMMAR_LEXER_ABSOLUTE_PATH)
 file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/qasl_grammar.txt" QASL_LL_GRAMMAR_ABSOLUTE_PATH)
 
+set(QASL_FILES src/qasl/lang/parse.cpp
+                src/util/lexer.cpp
+                src/util/llparser.cpp)
+
 # This is a really small library :p
-add_library(qasl "src/qasl/lang/lexer.cpp" "src/qasl/lang/llparser.cpp")
+add_library(qasl ${QASL_FILES})
 target_compile_options(qasl PRIVATE ${COMPILE_OPTIONS})
 target_include_directories(qasl PUBLIC "include")
 

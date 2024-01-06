@@ -5,8 +5,7 @@ start =
         ;
 # Line production
 line = "@" modifier line
-        | instruction ";" line
-        |
+        | instruction ";"
         ;
 
 # Instruction production
@@ -19,7 +18,7 @@ modifier =  KW_annotation IDENTIFIER
 
 # Operands production
 operands =  I_LITERAL operands
-            | "," operands
+            | "," I_LITERAL operands
             |
             ;
 

@@ -17,15 +17,16 @@ namespace qasl {
 
 template <class T> using sptr=std::shared_ptr<T>;
 
-// parse_node_t has been templated with a UNION_TYPE
-// that refers to, indeed, a union (specifically some
-// form of std::variant). This is so that the user
-// can control what data exists in each node (and
-// indeed different nodes may want different data).
-template <class UNION_TYPE>
+// parse_node_t has been templated with a template T
+// that refers to some data (i.e. a struct).
+// This is so that the user can control what data exists 
+// in each node.
+template <class T>
 struct parse_node_t {
     token_type  symbol;
-    UNION_TYPE  data;
+    T           data;
+
+    std::string tmp_data; // Raw data from recv_token
     bool data_has_been_assigned = false;
     // Pointers to parent and children:
     sptr<parse_node_t>              parent = nullptr;

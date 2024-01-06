@@ -7,30 +7,31 @@
 
 template <class T>
 ParseNetwork<T>::ParseNetwork()
-    :root(make_node(T_empty)),
+    :root(nullptr),
     leaves()
 {}
 
 template <class T> void
 ParseNetwork<T>::recv_rule(rule_t r) {
     // Find first nonterminal == LHS in the leaves.
-    sptr<parse_node_t<T>> branch_src = root;
+    sptr<parse_node_t<T>> branch_src = nullptr;
 
     std::vector<sptr<parse_node_t>> new_leaves;
     for (sptr<parse_node_t<T>> x : leaves) {
-        if (x->symbol == r.lhs && branch_src == root) {
+        if (x->symbol == r.lhs && branch_src == nullptr) {
             // Create a node for each symbol in the RHS.
             branch_src = x;
         } else {
             new_leaves.push_back(x);
         }
     }
-    // branch_src = root or one of the leaves. Now,
-    // we need to make a new node for the LHS (nonterminal).
-    if (branch_src == root) {
-        branch_src = make_node(r.lhs);
-        branch_src->parent = root;
-        root->children.push_back(branch_src);
+    // branch_src = nullptr or one of the leaves. If branch_src
+    // is null, then that means the tree is empty. Make LHS the
+    // root of the tree.
+    if (branch_src == nullptr) {
+        root = make_node(r.lhs);
+        root->parent = nullptr;
+        branch_src = root;
     }
     // Expand the tree by branching from branch_src.
     for (token_type t : r.rhs) {
@@ -50,7 +51,7 @@ ParseNetwork<T>::recv_token(Token tok) {
     std::string value = std::get<1>(tok);
     for (sptr<parse_node_t<T>> x : leaves) {
         if (x->symbol == type && !x->data_has_been_assigned) {
-            x->data.str = value;
+            x->tmp_data = value;
             x->data_has_been_assigned = true;
             return;
         }
