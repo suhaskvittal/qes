@@ -3,7 +3,7 @@
  *  date:   4 January 2024
  * */
 
-namespace qasl {
+namespace qes {
 
 inline std::string
 print_token(Token token) {
@@ -33,4 +33,4 @@ print_rule(rule_t r) {
     return s;
 }
 
-}   // qasl
+}   // qes

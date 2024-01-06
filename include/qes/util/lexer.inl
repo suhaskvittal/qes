@@ -5,7 +5,7 @@
 
 #include <sstream>
 
-namespace qasl {
+namespace qes {
 
 inline bool
 Lexer::matches(std::string text, token_type t) {
@@ -23,4 +23,4 @@ Lexer::get_tokens() {
     return tokens;
 }
 
-}   // qasl
+}   // qes

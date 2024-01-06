@@ -3,7 +3,7 @@
  *  date:   4 January 2024
  * */
 
-namespace qasl {
+namespace qes {
 
 inline rule_t
 LLParser::get_rule(token_type nt, token_type t) {
@@ -84,7 +84,7 @@ LLParser::parse(std::vector<Token> tokens, T& callback_manager) {
         parsing_stack.pop_back();
         if (sym == T_empty) continue; // This is auto matched.
         if (sym == "$") {
-            std::cerr << "[ qasl ] parsing error: unexpectedly hit bottom of the stack ($)" << std::endl;
+            std::cerr << "[ qes ] parsing error: unexpectedly hit bottom of the stack ($)" << std::endl;
             exit(1);
         } else if (is_nonterminal(sym)) {
             // Push new entries on stack according to rule.
@@ -93,7 +93,7 @@ LLParser::parse(std::vector<Token> tokens, T& callback_manager) {
                 // Try again, with the second argument being T_empty
                 r = get_rule(sym, T_empty);
                 if (r.lhs == T_undefined) {
-                    std::cerr << "[ qasl ] parsing error: failed to get rule for nonterminal "
+                    std::cerr << "[ qes ] parsing error: failed to get rule for nonterminal "
                         << "\"" << sym << "\" and terminal \"" << type << "\"" << std::endl;
                     exit(1);
                 }
@@ -106,7 +106,7 @@ LLParser::parse(std::vector<Token> tokens, T& callback_manager) {
                 callback_manager.recv_token(tok);
                 it++;
             } else {
-                std::cerr << "[ qasl ] parsing error: mismatched token \"" << print_token(tok)
+                std::cerr << "[ qes ] parsing error: mismatched token \"" << print_token(tok)
                     << "\" as terminal of type \"" << sym << "\"" << std::endl;
                 exit(1);
             }
@@ -114,4 +114,4 @@ LLParser::parse(std::vector<Token> tokens, T& callback_manager) {
     }
 }
 
-}   // qasl
+}   // qes

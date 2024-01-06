@@ -3,8 +3,8 @@
  *  date:   5 January 2024
  * */
 
-#ifndef QASL_INSTRUCTION_h
-#define QASL_INSTRUCTION_h
+#ifndef QES_INSTRUCTION_h
+#define QES_INSTRUCTION_h
 
 #include <map>
 #include <set>
@@ -14,7 +14,7 @@
 
 #include <stdint.h>
 
-namespace qasl {
+namespace qes {
 
 typedef std::string annotation_t;
 typedef std::variant<int64_t, uint64_t, double, std::string> property_t;
@@ -80,8 +80,8 @@ using Program=std::vector<Instruction<OPERAND, PROPERTY>>;
 template <class T, class U>
 std::string print_prog(const Program<T, U>&);
 
-}   // qasl
+}   // qes
 
 #include "instruction.inl"
 
-#endif  // QASL_INSTRUCTION_h
+#endif  // QES_INSTRUCTION_h

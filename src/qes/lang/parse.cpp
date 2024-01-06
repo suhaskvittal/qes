@@ -3,19 +3,19 @@
  *  date:   5 January 2024
  * */
 
-#include "qasl/errors.h"
-#include "qasl/lang/parse.h"
-#include "qasl/lang/parse_impl.h"
-#include "qasl/util/lexer.h"
-#include "qasl/util/llparser.h"
-#include "qasl/util/parse_network.h"
+#include "qes/errors.h"
+#include "qes/lang/parse.h"
+#include "qes/lang/parse_impl.h"
+#include "qes/util/lexer.h"
+#include "qes/util/llparser.h"
+#include "qes/util/parse_network.h"
 
 #include <fcntl.h>
 #include <unistd.h>
 
 #include <map>
 
-namespace qasl {
+namespace qes {
 
 #define PUT(sym)    std::make_pair( #sym , &p_##sym)
 
@@ -34,24 +34,24 @@ static const std::map<std::string, void(*)(sptr<QaslParseNode>)>
 
 Program<>
 read_program(std::istream& fin) {
-#ifndef QASL_LEXER_FILE
-    exit_macro_does_not_exist("QASL_LEXER_FILE");
+#ifndef QES_LEXER_FILE
+    exit_macro_does_not_exist("QES_LEXER_FILE");
 #endif
 
-#ifndef QASL_LL_GRAMMAR_FILE
-    exit_macro_does_not_exist("QASL_LL_GRAMMAR_FILE");
+#ifndef QES_LL_GRAMMAR_FILE
+    exit_macro_does_not_exist("QES_LL_GRAMMAR_FILE");
 #endif
     // Check that both the lexer file and grammar file both exist.
-    test_file_exists(QASL_LEXER_FILE, "QASL_LEXER_FILE");
-    test_file_exists(QASL_LL_GRAMMAR_FILE, "QASL_LL_GRAMMAR_FILE");
+    test_file_exists(QES_LEXER_FILE, "QES_LEXER_FILE");
+    test_file_exists(QES_LL_GRAMMAR_FILE, "QES_LL_GRAMMAR_FILE");
 
     QaslParseNetwork net;
 
-    Lexer qasl_lexer(QASL_LEXER_FILE);
-    qasl_lexer.read_tokens(fin);
+    Lexer qes_lexer(QES_LEXER_FILE);
+    qes_lexer.read_tokens(fin);
 
-    LLParser qasl_parser(QASL_LL_GRAMMAR_FILE);
-    qasl_parser.parse(qasl_lexer.get_tokens(), net);
+    LLParser qes_parser(QES_LL_GRAMMAR_FILE);
+    qes_parser.parse(qes_lexer.get_tokens(), net);
     
     // Now, the parse network should be populated. We simply need to
     // propagate the data.
@@ -63,4 +63,4 @@ read_program(std::istream& fin) {
     return net.root->data.inst_block;
 }
 
-}   // qasl
+}   // qes

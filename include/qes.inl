@@ -3,11 +3,11 @@
  *  date:   5 January 2024
  * */
 
-#include "qasl/lang/parse.h"
+#include "qes/lang/parse.h"
 
 #include <fstream>
 
-namespace qasl {
+namespace qes {
 
 inline Program<>
 from_file(std::string input_file) {
@@ -33,4 +33,4 @@ operator<<(std::ostream& out, const Program<>& prog) {
     return out;
 }
 
-}   // qasl
+}   // qes

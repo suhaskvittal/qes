@@ -3,7 +3,7 @@
  *  date:   5 January 2024
  * */
 
-namespace qasl {
+namespace qes {
 
 inline void
 p_IDENTIFIER(sptr<QaslParseNode> x) {
@@ -111,4 +111,4 @@ p_anyval(sptr<QaslParseNode> x) {
     x->data.anyval = x->children[0]->data.anyval;
 }
 
-}   // qasl
+}   // qes

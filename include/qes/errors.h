@@ -8,12 +8,12 @@
 
 #include <string>
 
-namespace qasl {
+namespace qes {
 
 void    exit_macro_does_not_exist(std::string macro_name);
 void    test_file_exists(std::string, std::string macro_name);
 
-}   // qasl
+}   // qes
 
 #include "errors.inl"
 

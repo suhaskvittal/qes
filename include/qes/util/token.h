@@ -3,14 +3,14 @@
  *  date:   4 January 2024
  * */
 
-#ifndef QASL_TOKEN_h
-#define QASL_TOKEN_h
+#ifndef QES_TOKEN_h
+#define QES_TOKEN_h
 
 #include <string>
 #include <tuple>
 #include <vector>
 
-namespace qasl {
+namespace qes {
 
 typedef std::string token_type;
 // Each token has the following entries:
@@ -34,8 +34,8 @@ struct rule_t {
 std::string print_token(Token token);
 std::string print_rule(rule_t);
 
-}   // qasl
+}   // qes
 
 #include "token.inl"
 
-#endif  // QASL_TOKEN_h
+#endif  // QES_TOKEN_h

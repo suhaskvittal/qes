@@ -3,14 +3,14 @@
  *  date:   3 January 2024
  * */
 
-#include "qasl/util/lexer.h"
+#include "qes/util/lexer.h"
 
 #include <fstream>
 
 #include <fcntl.h>
 #include <unistd.h>
 
-namespace qasl {
+namespace qes {
 
 Lexer::Lexer(std::string lexer_file)
     :token_order(),
@@ -20,7 +20,7 @@ Lexer::Lexer(std::string lexer_file)
 {
     // Read tokens from token file.
     if (faccessat(AT_FDCWD, lexer_file.c_str(), F_OK, 0) != 0) {
-        std::cerr << "[ qasl ] Lexer file \"" << lexer_file << "\" does not exist." << std::endl;
+        std::cerr << "[ qes ] Lexer file \"" << lexer_file << "\" does not exist." << std::endl;
         exit(1);
     }
     // Read the file in.
@@ -128,5 +128,5 @@ match_found:
     }
 }
 
-}   // qasl
+}   // qes
 

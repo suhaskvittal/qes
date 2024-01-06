@@ -3,13 +3,13 @@
  *  date:   5 January 2024
  * */
 
-#ifndef QASL_PARSE_IMPL_h
-#define QASL_PARSE_IMPL_h
+#ifndef QES_PARSE_IMPL_h
+#define QES_PARSE_IMPL_h
 
-#include "qasl/lang/instruction.h"
-#include "qasl/util/parse_network.h"
+#include "qes/lang/instruction.h"
+#include "qes/util/parse_network.h"
 
-namespace qasl {
+namespace qes {
 
 // Implementation of all parse functions and data
 // structures.
@@ -46,8 +46,8 @@ void    p_modifier(sptr<QaslParseNode>);
 void    p_operands(sptr<QaslParseNode>);
 void    p_anyval(sptr<QaslParseNode>);
 
-}   // qasl
+}   // qes
 
 #include "parse_impl.inl"
 
-#endif  // QASL_PARSE_IMPL_h
+#endif  // QES_PARSE_IMPL_h

@@ -5,7 +5,7 @@
 
 #include <sstream>
 
-namespace qasl {
+namespace qes {
 
 template <class T, class U>
 Instruction<T, U>::Instruction()
@@ -176,4 +176,4 @@ print_prog(const Program<T, U>& program) {
     return out;
 }
 
-}   // qasl
+}   // qes

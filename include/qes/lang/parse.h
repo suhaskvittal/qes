@@ -3,14 +3,14 @@
  *  date:   5 January 2024
  * */
 
-#ifndef QASL_PARSE_h
-#define QASL_PARSE_h
+#ifndef QES_PARSE_h
+#define QES_PARSE_h
 
-#include "qasl/lang/instruction.h"
+#include "qes/lang/instruction.h"
 
 #include <iostream>
 
-namespace qasl {
+namespace qes {
 
 // This file is dedicated to parsing the baseline Qasl language.
 //
@@ -19,6 +19,6 @@ namespace qasl {
 
 Program<> read_program(std::istream&);
 
-}   // qasl
+}   // qes
 
-#endif  // QASL_PARSE_h
+#endif  // QES_PARSE_h

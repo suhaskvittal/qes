@@ -3,15 +3,15 @@
  *  date:   4 January 2024
  * */
 
-#include "qasl/errors.h"
-#include "qasl/util/lexer.h"
-#include "qasl/util/llparser.h"
+#include "qes/errors.h"
+#include "qes/util/lexer.h"
+#include "qes/util/llparser.h"
 
 #include <algorithm>
 #include <fstream>
 #include <iostream>
 
-namespace qasl {
+namespace qes {
 
 LLParser::LLParser(std::string grammar_file) 
     :grammar(),
@@ -47,7 +47,7 @@ LLParser::LLParser(std::string grammar_file)
             } else if (type == ";" || type == "|") {
                 // We are done with the current rule.
                 if (!current_rule.is_valid()) {
-                    std::cerr << "[ qasl ] grammar has invalid rule." << std::endl;
+                    std::cerr << "[ qes ] grammar has invalid rule." << std::endl;
                     exit(1);
                 }
                 if (current_rule.rhs.empty()) current_rule.rhs.push_back(T_empty);
@@ -61,7 +61,7 @@ LLParser::LLParser(std::string grammar_file)
                 }
                 current_rule.rhs.clear();
             } else {
-                std::cerr << "[ qasl ] invalid token of type \"" << type 
+                std::cerr << "[ qes ] invalid token of type \"" << type 
                         << "\" (value: \"" << value << "\") in rule for non-terminal \"" 
                         << current_rule.lhs << "\"" << std::endl;
                 exit(1);
@@ -72,7 +72,7 @@ LLParser::LLParser(std::string grammar_file)
             } else if (type == "=") {
                 reading_rule = true;
             } else {
-                std::cerr << "[ qasl ] invalid token of type \"" << type << "\" (value: \""
+                std::cerr << "[ qes ] invalid token of type \"" << type << "\" (value: \""
                         << value << "\") when reading nonterminal" << std::endl;
                 exit(1);
             }
@@ -136,4 +136,4 @@ LLParser::compute_first_and_follow_sets() {
     } while (any_has_changed);
 }
 
-}   // qasl
+}   // qes

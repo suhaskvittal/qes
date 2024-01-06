@@ -3,21 +3,21 @@
  *  date:   4 January 2024
  * */
 
-#ifndef QASL_LLPARSER_h
-#define QASL_LLPARSER_h
+#ifndef QES_LLPARSER_h
+#define QES_LLPARSER_h
 
-#include "qasl/util/token.h"
+#include "qes/util/token.h"
 
 #include <map>
 #include <set>
 #include <vector>
 
-namespace qasl {
+namespace qes {
 
 // Grammar definitions:
 
 // The LLParser implements an LLParser according
-// to the passed in grammar file. See data/qasl_grammar.txt
+// to the passed in grammar file. See data/qes_grammar.txt
 // for examples. At a high level:
 //      A production rule can be declared as follows:
 //          <nonterminal> = <rule1> | <rule2> | ... | <rulek>;
@@ -66,8 +66,8 @@ private:
     std::map<token_type, std::map<token_type, int>> parsing_table;
 };
 
-}   // qasl
+}   // qes
 
 #include "llparser.inl"
 
-#endif  // QASL_LLPARSER_h
+#endif  // QES_LLPARSER_h

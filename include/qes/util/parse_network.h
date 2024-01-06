@@ -3,17 +3,17 @@
  *  date:   4 January 2024
  * */
 
-#ifndef QASL_PARSE_NETWORK_h
-#define QASL_PARSE_NETWORK_h
+#ifndef QES_PARSE_NETWORK_h
+#define QES_PARSE_NETWORK_h
 
-#include "qasl/util/token.h"
+#include "qes/util/token.h"
 
 #include <memory>
 #include <vector>
 
 #include <stdint.h>
 
-namespace qasl {
+namespace qes {
 
 template <class T> using sptr=std::shared_ptr<T>;
 
@@ -59,8 +59,8 @@ private:
     sptr<parse_node_t<T>>  make_node(token_type);
 };
 
-}   // qasl
+}   // qes
 
 #include "parse_network.inl"
 
-#endif  // QASL_PARSE_NETWORK_h
+#endif  // QES_PARSE_NETWORK_h

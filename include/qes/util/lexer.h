@@ -3,21 +3,21 @@
  *  date:   4 January 2024
  * */
 
-#ifndef QASL_LEXER_h
-#define QASL_LEXER_h
+#ifndef QES_LEXER_h
+#define QES_LEXER_h
 
-#include "qasl/util/token.h"
+#include "qes/util/token.h"
 
 #include <iostream>
 #include <regex>
 #include <set>
 #include <vector>
 
-namespace qasl {
+namespace qes {
 
 // This is a general Lexer function, whose functionality
 // can be specified by the file pointed to by lexer_file
-// in the constructor. See data/qasl_lexer.txt for examples.
+// in the constructor. See data/qes_lexer.txt for examples.
 // At a high level:
 //      Token types (terminals for the parser) are specified as
 //          <TOKEN_TYPE>    <REGEX>
@@ -49,8 +49,8 @@ private:
     std::vector<Token> tokens;
 };
 
-}   // qasl
+}   // qes
 
 #include "lexer.inl"
 
-#endif  // QASL_LEXER_h
+#endif  // QES_LEXER_h

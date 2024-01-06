@@ -5,7 +5,7 @@
 
 #include <deque>
 
-namespace qasl {
+namespace qes {
 
 template <class T>
 ParseNetwork<T>::ParseNetwork()
@@ -98,4 +98,4 @@ ParseNetwork<T>::make_node(token_type t) {
     return x;
 }
 
-}   // qasl
+}   // qes
