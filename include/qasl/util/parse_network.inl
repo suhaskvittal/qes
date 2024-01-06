@@ -18,13 +18,16 @@ ParseNetwork<T>::recv_rule(rule_t r) {
     // Find first nonterminal == LHS in the leaves.
     sptr<parse_node_t<T>> branch_src = nullptr;
 
-    std::vector<sptr<parse_node_t<T>>> new_leaves;
+    std::vector<sptr<parse_node_t<T>>> new_leaves,
+                                        leaves_after_branch;
     for (sptr<parse_node_t<T>> x : leaves) {
         if (x->symbol == r.lhs && branch_src == nullptr) {
             // Create a node for each symbol in the RHS.
             branch_src = x;
-        } else {
+        } else if (branch_src == nullptr) {
             new_leaves.push_back(x);
+        } else {
+            leaves_after_branch.push_back(x);
         }
     }
     // branch_src = nullptr or one of the leaves. If branch_src
@@ -42,10 +45,8 @@ ParseNetwork<T>::recv_rule(rule_t r) {
         branch_src->children.push_back(x);
         new_leaves.push_back(x);
     }
+    new_leaves.insert(new_leaves.end(), leaves_after_branch.begin(), leaves_after_branch.end());
     leaves = std::move(new_leaves);
-    std::cout << "new leaves:";
-    for (auto x : leaves) std::cout << " " << x->symbol;
-    std::cout << "\n";
 }
 
 template <class T> inline void

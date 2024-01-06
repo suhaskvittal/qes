@@ -38,7 +38,6 @@ p_start(sptr<QaslParseNode> x) {
         uint64_t n_repeats = x->children[2]->data.repeat_count;
         Program<> blk = std::move(x->children[5]->data.inst_block);
 
-        Program<> prog;
         while (n_repeats--) {
             prog.insert(prog.end(), blk.cbegin(), blk.cend());
         }
