@@ -15,8 +15,8 @@ namespace qasl {
 // structures.
 
 struct network_data_t {
-    Program         inst_block;
-    Instruction     inst;
+    Program<>       inst_block;
+    Instruction<>   inst;
 
     std::string             instruction_name;
     std::vector<uint64_t>   instruction_operands;
@@ -32,7 +32,6 @@ struct network_data_t {
     property_t  anyval;
 };
 
-typedef std::variant<int64_t, uint64_t, double, std::string> network_data_t;
 typedef ParseNetwork<network_data_t>    QaslParseNetwork;
 typedef parse_node_t<network_data_t>    QaslParseNode;
 
@@ -49,6 +48,6 @@ void    p_anyval(sptr<QaslParseNode>);
 
 }   // qasl
 
-#include "parse_impl.h"
+#include "parse_impl.inl"
 
 #endif  // QASL_PARSE_IMPL_h

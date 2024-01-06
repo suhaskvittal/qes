@@ -17,7 +17,7 @@ namespace qasl {
 // Extensions to the language will need their own parsing code, but
 // can interface with Instruction and ParseNetwork using the templates.
 
-Program read_program(std::istream&);
+Program<> read_program(std::istream&);
 
 }   // qasl
 

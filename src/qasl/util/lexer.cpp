@@ -12,9 +12,6 @@
 
 namespace qasl {
 
-const token_type T_undefined = "undefined";
-const token_type T_empty = "empty";
-
 Lexer::Lexer(std::string lexer_file)
     :token_order(),
     regex_map(),

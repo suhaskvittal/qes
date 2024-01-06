@@ -6,6 +6,8 @@
 #ifndef QASL_ERRORS_h
 #define QASL_ERRORS_h
 
+#include <string>
+
 namespace qasl {
 
 void    exit_macro_does_not_exist(std::string macro_name);

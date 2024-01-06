@@ -8,7 +8,15 @@
 namespace qasl {
 
 template <class T, class U>
-Instruction<T, U>::Instruction(std::string name, std::vector<OPERAND> operands)
+Instruction<T, U>::Instruction()
+    :name(),
+    operands(),
+    annotations(),
+    property_map()
+{}
+
+template <class T, class U>
+Instruction<T, U>::Instruction(std::string name, std::vector<T> operands)
     :name(name),
     operands(operands),
     annotations(),
@@ -31,7 +39,8 @@ Instruction<T, U>::Instruction(Instruction<T, U>&& other)
     property_map(std::move(other.property_map))
 {}
 
-template <class T, class U, class X>
+template <class T, class U>
+template <class X>
 Instruction<T, U>::Instruction(std::string name, std::vector<X> _operands)
     :name(name),
     operands(_operands.size())
@@ -41,7 +50,8 @@ Instruction<T, U>::Instruction(std::string name, std::vector<X> _operands)
     }
 }
 
-template <class T, class U, class ITER>
+template <class T, class U>
+template <class ITER>
 Instruction<T, U>::Instruction(std::string name, ITER begin, ITER end)
     :name(name),
     operands()
@@ -66,7 +76,8 @@ Instruction<T, U>::get(size_t k) const {
     return operands.at(k);
 }
 
-template <class T, class U, class X> inline X
+template <class T, class U>
+template <class X> inline X
 Instruction<T, U>::get(size_t k) const {
     return std::get<X>(operands.at(k));
 }
@@ -77,7 +88,7 @@ Instruction<T, U>::put(std::string ann) {
 }
 
 template <class T, class U> inline void
-Instruction<T, U>::put(std::string p, T v) {
+Instruction<T, U>::put(std::string p, U v) {
     property_map[p] = v;
 }
 
@@ -96,7 +107,8 @@ Instruction<T, U>::get_property(std::string x) const {
     return property_map.at(x);
 }
 
-template <class T, class U, class X> inline X
+template <class T, class U>
+template <class X> inline X
 Instruction<T, U>::get_property(std::string x) const {
     return std::get<X>(property_map.at(x));
 }

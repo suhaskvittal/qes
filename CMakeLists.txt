@@ -20,8 +20,8 @@ file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/grammar_lexer.txt" GRAMMAR_LEXE
 file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/qasl_grammar.txt" QASL_LL_GRAMMAR_ABSOLUTE_PATH)
 
 set(QASL_FILES src/qasl/lang/parse.cpp
-                src/util/lexer.cpp
-                src/util/llparser.cpp)
+                src/qasl/util/lexer.cpp
+                src/qasl/util/llparser.cpp)
 
 # This is a really small library :p
 add_library(qasl ${QASL_FILES})
@@ -33,8 +33,5 @@ target_compile_definitions(qasl PUBLIC
     GRAMMAR_LEXER_FILE="${GRAMMAR_LEXER_ABSOLUTE_PATH}"
     QASL_LL_GRAMMAR_FILE="${QASL_LL_GRAMMAR_ABSOLUTE_PATH}")
 
-add_executable(test_lexer src/lexer.test.cpp)
-target_link_libraries(test_lexer PRIVATE qasl)
-
-add_executable(test_llparser src/llparser.test.cpp)
-target_link_libraries(test_llparser PRIVATE qasl)
+add_executable(test_qasl src/qasl.test.cpp)
+target_link_libraries(test_qasl PRIVATE qasl)

@@ -7,6 +7,7 @@
 #define QASL_INSTRUCTION_h
 
 #include <map>
+#include <set>
 #include <string>
 #include <variant>
 #include <vector>
@@ -26,6 +27,7 @@ typedef std::variant<int64_t, uint64_t, double, std::string> operand_t;
 template <class OPERAND=operand_t, class PROPERTY=property_t>
 class Instruction {
 public:
+    Instruction(void);
     Instruction(std::string, std::vector<OPERAND>);
     Instruction(const Instruction&);
     Instruction(Instruction&&);

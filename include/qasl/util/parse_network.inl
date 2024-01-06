@@ -5,6 +5,8 @@
 
 #include <deque>
 
+namespace qasl {
+
 template <class T>
 ParseNetwork<T>::ParseNetwork()
     :root(nullptr),
@@ -16,7 +18,7 @@ ParseNetwork<T>::recv_rule(rule_t r) {
     // Find first nonterminal == LHS in the leaves.
     sptr<parse_node_t<T>> branch_src = nullptr;
 
-    std::vector<sptr<parse_node_t>> new_leaves;
+    std::vector<sptr<parse_node_t<T>>> new_leaves;
     for (sptr<parse_node_t<T>> x : leaves) {
         if (x->symbol == r.lhs && branch_src == nullptr) {
             // Create a node for each symbol in the RHS.
@@ -58,7 +60,8 @@ ParseNetwork<T>::recv_token(Token tok) {
     }
 }
 
-template <class T, class FUNC> inline void
+template <class T>
+template <class FUNC> inline void
 ParseNetwork<T>::apply_callback_bottom_up(FUNC fn) {
     std::deque<sptr<parse_node_t<T>>> node_list(leaves.begin(), leaves.end());
     while (node_list.size()) {
@@ -71,10 +74,11 @@ ParseNetwork<T>::apply_callback_bottom_up(FUNC fn) {
     }
 }
 
-template <class T> inline sptr<parse_node_t>
+template <class T> inline sptr<parse_node_t<T>>
 ParseNetwork<T>::make_node(token_type t) {
     sptr<parse_node_t<T>> x = std::make_shared<parse_node_t<T>>();
     x->symbol = t;
     return x;
 }
 
+}   // qasl

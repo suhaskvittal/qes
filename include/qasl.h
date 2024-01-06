@@ -8,9 +8,17 @@
 #ifndef QASL_h
 #define QASL_h
 
-#include <string>
+#include "qasl/lang/instruction.h"
+
+#include <iostream>
 
 namespace qasl {
+
+Program<>   from_file(std::string);
+void        to_file(std::string, const Program<>&);
+
+std::ostream& operator<<(std::ostream&, const Instruction<>&);
+std::ostream& operator<<(std::ostream&, const Program<>&);
 
 }   // qasl
 
