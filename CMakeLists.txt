@@ -1,10 +1,10 @@
 # author:   Suhas Vittal
 # date:     4 January 2024
 
-# Qasl: QuAntum Specification Language
+# QES: Quantum Experiment Specification language
 
 cmake_minimum_required(VERSION 3.20.2)
-project(Qasl VERSION 0.1)
+project(Qes VERSION 0.1)
 
 if (CMAKE_BUILD_TYPE MATCHES Release)
     set(COMPILE_OPTIONS -Ofast -fno-strict-aliasing)
