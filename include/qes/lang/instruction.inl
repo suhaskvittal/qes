@@ -136,6 +136,11 @@ Instruction<T, U>::get_annotations() const {
     return annotations;
 }
 
+template <class T, class U> inline size_t
+Instruction<T, U>::get_number_of_operands() const {
+    return operands.size();
+}
+
 template <class T, class U> inline std::map<std::string, U>
 Instruction<T, U>::get_property_map() const {
     return property_map;

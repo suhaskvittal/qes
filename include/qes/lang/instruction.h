@@ -58,6 +58,8 @@ public:
     std::vector<OPERAND>    get_operands(void) const;
     std::set<annotation_t>  get_annotations(void) const;
 
+    size_t get_number_of_operands(void) const;
+
     std::map<std::string, PROPERTY> get_property_map(void) const;
 private:
     std::string             name;

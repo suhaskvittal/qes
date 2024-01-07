@@ -33,5 +33,7 @@ target_compile_definitions(qes PUBLIC
     GRAMMAR_LEXER_FILE="${GRAMMAR_LEXER_ABSOLUTE_PATH}"
     QES_LL_GRAMMAR_FILE="${QES_LL_GRAMMAR_ABSOLUTE_PATH}")
 
-add_executable(test_qes src/qes.test.cpp)
-target_link_libraries(test_qes PRIVATE qes)
+if (COMPILE_TESTS)
+    add_executable(test_qes src/qes.test.cpp)
+    target_link_libraries(test_qes PRIVATE qes)
+endif()
