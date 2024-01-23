@@ -2,7 +2,7 @@
 *annotation
 *property
 
-IDENTIFIER  [A-Za-z_]+
+IDENTIFIER  [A-Za-z_][A-Za-z_0-9]*
 I_LITERAL   \d+
 F_LITERAL   \d*\.\d+|\d+\.\d*
 ^WHITESPACE  \s+
