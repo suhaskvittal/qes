@@ -17,8 +17,8 @@
 namespace qes {
 
 typedef std::string annotation_t;
-typedef std::variant<int64_t, uint64_t, double, std::string> property_t;
-typedef std::variant<int64_t, uint64_t, double, std::string> operand_t;
+typedef std::variant<int64_t, double, std::string> property_t;
+typedef std::variant<int64_t, double, std::string> operand_t;
 
 // Instruction is the basic representation of any command in Qasl.
 //

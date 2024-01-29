@@ -19,10 +19,10 @@ struct network_data_t {
     Instruction<>   inst;
 
     std::string             instruction_name;
-    std::vector<uint64_t>   instruction_operands;
+    std::vector<int64_t>   instruction_operands;
 
-    uint64_t    repeat_count;
-    uint64_t    operand_id;
+    int64_t     repeat_count;
+    int64_t     operand_id;
 
     std::string modifier_name;
 

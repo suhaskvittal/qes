@@ -13,11 +13,11 @@ p_IDENTIFIER(sptr<QaslParseNode> x) {
 
 inline void
 p_I_LITERAL(sptr<QaslParseNode> x) {
-    const uint64_t ui = std::stoull(x->tmp_data);
-    x->data.operand_id = ui;
-    x->data.repeat_count = ui;
+    const int64_t z = std::stoll(x->tmp_data);
+    x->data.operand_id = z;
+    x->data.repeat_count = z;
 
-    x->data.anyval = static_cast<int64_t>(ui);
+    x->data.anyval = z;
 }
 
 inline void
@@ -94,10 +94,10 @@ p_operands(sptr<QaslParseNode> x) {
     // make sure the first children is not empty (in which case we do nothing).
     if (x->children[0]->symbol == T_empty) return;
 
-    std::vector<uint64_t> operands;
+    std::vector<int64_t> operands;
 
     size_t off = (x->children[0]->symbol == ",") ? 1 : 0;
-    std::vector<uint64_t> tail = std::move(x->children[1+off]->data.instruction_operands);
+    std::vector<int64_t> tail = std::move(x->children[1+off]->data.instruction_operands);
 
     operands.push_back(x->children[off]->data.operand_id);
     operands.insert(operands.end(), tail.begin(), tail.end());
