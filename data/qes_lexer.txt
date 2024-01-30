@@ -5,10 +5,12 @@
 IDENTIFIER  [A-Za-z_][A-Za-z_0-9]*
 I_LITERAL   \d+
 F_LITERAL   \d*\.\d+|\d+\.\d*
+S_LITERAL   ".*"
 ^WHITESPACE  \s+
 ^COMMENT     #.*\n
 
 ,
+:
 ;
 (
 )

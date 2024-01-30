@@ -20,6 +20,7 @@ file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/grammar_lexer.txt" GRAMMAR_LEXE
 file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/data/qes_grammar.txt" QES_LL_GRAMMAR_ABSOLUTE_PATH)
 
 set(QES_FILES src/qes/lang/parse.cpp
+                src/qes/lang/parse_impl.cpp
                 src/qes/util/lexer.cpp
                 src/qes/util/llparser.cpp)
 

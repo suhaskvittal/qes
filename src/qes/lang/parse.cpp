@@ -19,11 +19,12 @@ namespace qes {
 
 #define PUT(sym)    std::make_pair( #sym , &p_##sym)
 
-static const std::map<std::string, void(*)(sptr<QaslParseNode>)> 
+static const std::map<std::string, void(*)(sptr<QesParseNode>)> 
     PARSE_FUNCTION_TABLE{
         PUT(IDENTIFIER),
         PUT(I_LITERAL),
         PUT(F_LITERAL),
+        PUT(S_LITERAL),
         PUT(start),
         PUT(line),
         PUT(instruction),
@@ -34,6 +35,8 @@ static const std::map<std::string, void(*)(sptr<QaslParseNode>)>
 
 Program<>
 read_program(std::istream& fin) {
+    clear_identifier_refs();
+    reset_pc();
 #ifndef QES_LEXER_FILE
     exit_macro_does_not_exist("QES_LEXER_FILE");
 #endif
@@ -45,7 +48,7 @@ read_program(std::istream& fin) {
     test_file_exists(QES_LEXER_FILE, "QES_LEXER_FILE");
     test_file_exists(QES_LL_GRAMMAR_FILE, "QES_LL_GRAMMAR_FILE");
 
-    QaslParseNetwork net;
+    QesParseNetwork net;
 
     Lexer qes_lexer(QES_LEXER_FILE);
     qes_lexer.read_tokens(fin);
@@ -55,12 +58,14 @@ read_program(std::istream& fin) {
     
     // Now, the parse network should be populated. We simply need to
     // propagate the data.
-    net.apply_callback_bottom_up([&] (sptr<QaslParseNode> x)
+    net.apply_callback_bottom_up([&] (sptr<QesParseNode> x)
     {
         if (!PARSE_FUNCTION_TABLE.count(x->symbol)) return;
         PARSE_FUNCTION_TABLE.at(x->symbol)(x);
     });
-    return net.root->data.inst_block;
+    Program<> program = std::move(net.root->data.inst_block);
+    replace_id_refs_with_pc(program);
+    return program;
 }
 
 }   // qes

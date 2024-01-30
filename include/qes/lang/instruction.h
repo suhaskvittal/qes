@@ -17,14 +17,13 @@
 namespace qes {
 
 typedef std::string annotation_t;
-typedef std::variant<int64_t, double, std::string> property_t;
-typedef std::variant<int64_t, double, std::string> operand_t;
+typedef std::variant<int64_t, double, std::string> any_t;
 
 // Instruction is the basic representation of any command in Qasl.
 //
 // It is templated (with default arguments) to represent any operand or
 // property of the instruction, so it is extensible to custom instructions.
-template <class OPERAND=operand_t, class PROPERTY=property_t>
+template <class OPERAND=any_t, class PROPERTY=any_t>
 class Instruction {
 public:
     Instruction(void);
@@ -52,7 +51,9 @@ public:
     PROPERTY             get_property(std::string) const;
     template <class T> T get_property(std::string) const;
     // Merges the operands of two instructions together.
-    void        join(const Instruction&);
+    void    join(const Instruction&);
+
+    void    set_operands(std::vector<OPERAND>);
 
     std::string             get_name(void) const;
     std::vector<OPERAND>    get_operands(void) const;
@@ -74,7 +75,7 @@ private:
 template <class T, class U>
 std::string print_inst(const Instruction<T, U>&, bool print_inline=true);
 
-template <class OPERAND=operand_t, class PROPERTY=property_t>
+template <class OPERAND=any_t, class PROPERTY=any_t>
 using Program=std::vector<Instruction<OPERAND, PROPERTY>>;
 
 // This function is never going to print inline. Most useful to dump a Qasl

@@ -18,33 +18,52 @@ struct network_data_t {
     Program<>       inst_block;
     Instruction<>   inst;
 
-    std::string             instruction_name;
-    std::vector<int64_t>   instruction_operands;
+    std::string         instruction_name;
+    std::vector<any_t>  instruction_operands;
 
-    int64_t     repeat_count;
-    int64_t     operand_id;
+    int64_t repeat_count;
+    int64_t operand_id;
+
+    // A pointer to the potential PC.
+    sptr<int64_t> pc_ptr;
 
     std::string modifier_name;
 
-    std::set<std::string>               annotation_set;
-    std::map<std::string, property_t>   property_map;
+    std::set<std::string>           annotation_set;
+    std::map<std::string, any_t>    property_map;
 
-    property_t  anyval;
+    any_t   anyval;
 };
 
-typedef ParseNetwork<network_data_t>    QaslParseNetwork;
-typedef parse_node_t<network_data_t>    QaslParseNode;
+typedef ParseNetwork<network_data_t>    QesParseNetwork;
+typedef parse_node_t<network_data_t>    QesParseNode;
 
-void    p_IDENTIFIER(sptr<QaslParseNode>);
-void    p_I_LITERAL(sptr<QaslParseNode>);
-void    p_F_LITERAL(sptr<QaslParseNode>);
+// This function gets an integer that "stands" in for an identifier in an
+// anyval. This integer is later replaced with the PC value of the identifier
+// for branches.
+//
+// If the identifier does not have an assigned integer, it is given one.
+void    clear_identifier_refs(void);
+int64_t get_identifier_ref(std::string);
+void    set_identifier_ref_pc(int64_t, sptr<int64_t>);
+void    reset_pc(void);
+int64_t get_pc(void);
+int64_t increment_pc(int64_t by);
 
-void    p_start(sptr<QaslParseNode>);
-void    p_line(sptr<QaslParseNode>);
-void    p_instruction(sptr<QaslParseNode>);
-void    p_modifier(sptr<QaslParseNode>);
-void    p_operands(sptr<QaslParseNode>);
-void    p_anyval(sptr<QaslParseNode>);
+void    replace_id_refs_with_pc(Instruction<>&);
+void    replace_id_refs_with_pc(Program<>&);
+
+void    p_IDENTIFIER(sptr<QesParseNode>);
+void    p_I_LITERAL(sptr<QesParseNode>);
+void    p_F_LITERAL(sptr<QesParseNode>);
+void    p_S_LITERAL(sptr<QesParseNode>);
+
+void    p_start(sptr<QesParseNode>);
+void    p_line(sptr<QesParseNode>);
+void    p_instruction(sptr<QesParseNode>);
+void    p_modifier(sptr<QesParseNode>);
+void    p_operands(sptr<QesParseNode>);
+void    p_anyval(sptr<QesParseNode>);
 
 }   // qes
 

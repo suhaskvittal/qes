@@ -1,0 +1,8 @@
+h 0;
+jmp FOO;
+(FOO)   x 1;
+        nop;
+(BAR)   y 2;
+        cx 0, 1;
+        nop;
+jmp BAR;

@@ -121,6 +121,11 @@ Instruction<T, U>::join(const Instruction<T, U>& other) {
     operands.insert(operands.end(), other.operands.cbegin(), other.operands.cend());
 }
 
+template <class T, class U> inline void
+Instruction<T, U>::set_operands(std::vector<T> arr) {
+    operands = std::move(arr);
+}
+
 template <class T, class U> inline std::string
 Instruction<T, U>::get_name() const {
     return name;

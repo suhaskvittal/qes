@@ -5,6 +5,7 @@ start =
         ;
 # Line production
 line = "@" modifier line
+        | "(" IDENTIFIER ")" line
         | instruction ";"
         ;
 
@@ -17,13 +18,15 @@ modifier =  KW_annotation IDENTIFIER
             ;
 
 # Operands production
-operands =  I_LITERAL operands
-            | "," I_LITERAL operands
+operands =  anyval operands
+            | "," anyval operands
             |
             ;
 
 # Any value production
-anyval = I_LITERAL
+anyval = IDENTIFIER
+            | I_LITERAL
             | F_LITERAL
+            | S_LITERAL
             ;
 
