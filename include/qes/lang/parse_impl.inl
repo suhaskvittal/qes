@@ -32,7 +32,8 @@ p_F_LITERAL(sptr<QesParseNode> x) {
 
 inline void
 p_S_LITERAL(sptr<QesParseNode> x) {
-    x->data.anyval = x->tmp_data;
+    // Remove the quotes arround the literal.
+    x->data.anyval = x->tmp_data.substr(1, x->tmp_data.size()-2);
 }
 
 inline void
