@@ -3,6 +3,7 @@
  *  date:   5 January 2024
  * */
 
+#include <iomanip>
 #include <sstream>
 
 namespace qes {
@@ -165,10 +166,10 @@ print_inst(const Instruction<T, U>& inst, bool print_inline) {
         sout << whitespace;
     }
     // Finally dump the instruction contents
-    sout << inst.get_name() << "\t";
+    sout << std::left << std::setw(11) << inst.get_name() << " ";
     bool first = true;
     for (U op : inst.get_operands()) {
-        if (!first) sout << ", ";
+        if (!first) sout << ",";
         first = false;
         std::visit([&] (auto x) { sout << x; }, op);
     }
