@@ -36,6 +36,8 @@ public:
 
     Instruction& operator=(const Instruction&);
 
+    bool operator==(const Instruction&) const;
+
     // This function gets an operand, assuming the value is T. If it is not,
     // then std::variant will throw an error.
     OPERAND              get(size_t) const;

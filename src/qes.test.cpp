@@ -10,7 +10,7 @@ using namespace qes;
 int main(int argc, char* argv[]) {
     std::string input_file(argv[1]);
 
-    Program<> prog = from_file(input_file);
+    Program<> prog = fast_read_from_file(input_file);
     std::cout << prog << std::endl;
     return 0;
 }

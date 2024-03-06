@@ -3,8 +3,8 @@
  *  date:   5 January 2024
  * */
 
-#ifndef QES_PARSE_IMPL_h
-#define QES_PARSE_IMPL_h
+#ifndef QES_SAFE_PARSE_IMPL_h
+#define QES_SAFE_PARSE_IMPL_h
 
 #include "qes/lang/instruction.h"
 #include "qes/util/parse_network.h"
@@ -67,6 +67,6 @@ void    p_anyval(sptr<QesParseNode>);
 
 }   // qes
 
-#include "parse_impl.inl"
+#include "safe_parse_impl.inl"
 
-#endif  // QES_PARSE_IMPL_h
+#endif  // QES_SAFE_PARSE_IMPL_h

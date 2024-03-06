@@ -4,8 +4,8 @@
  * */
 
 #include "qes/errors.h"
-#include "qes/lang/parse.h"
-#include "qes/lang/parse_impl.h"
+#include "qes/lang/safe_parse.h"
+#include "qes/lang/safe_parse_impl.h"
 #include "qes/util/lexer.h"
 #include "qes/util/llparser.h"
 #include "qes/util/parse_network.h"
@@ -34,7 +34,7 @@ static const std::map<std::string, void(*)(sptr<QesParseNode>)>
     };
 
 Program<>
-read_program(std::istream& fin) {
+safe_read_program(std::istream& fin) {
     clear_identifier_refs();
     reset_pc();
 #ifndef QES_LEXER_FILE

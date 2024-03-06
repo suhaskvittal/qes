@@ -14,19 +14,18 @@
 
 namespace qes {
 
-// We provide two functions for reading from files.
-//      from_file is very generic and works with the specified grammar. It can be quite slow
-//      for dense programs.
+// We provide two functions for IO. 
+//  safe_read_from_file uses the lexer and grammar to parse the input file. This approach
+//  is not hardcoded, and can be controlled by updating the lexer/grammar and safe_parse
+//  and safe_parse_impl.
 //
-//      from_simple_file assumes that there are only quantum operations and does not invoke
-//      the parser/lexer. Instead, the characters are read one by one and assumed to follow
-//      the format of 
-//          instruction operand,operand,operand,...;    --> all operands are integers.
-//      Annotations and properties are also allowed.
-Program<>   from_file(std::string);
-Program<>   from_simple_file(std::string);
+//  fast_read_from_file is hard-coded and does not use the provided lexer or grammar files.
+//  This function should be used for a stable version of qes. Consequently, new capabilities
+//  should be first tested with safe_read_from_file and then implemented in fast_read_from_file.
+Program<>   safe_read_from_file(std::string);
+Program<>   fast_read_from_file(std::string);
 
-void        to_file(std::string, const Program<>&);
+void        write_to_file(std::string, const Program<>&);
 
 std::ostream& operator<<(std::ostream&, const Instruction<>&);
 std::ostream& operator<<(std::ostream&, const Program<>&);

@@ -3,20 +3,27 @@
  *  date:   5 January 2024
  * */
 
-#include "qes/lang/parse.h"
+#include "qes/lang/safe_parse.h"
+#include "qes/lang/fast_parse.h"
 
 #include <fstream>
 
 namespace qes {
 
 inline Program<>
-from_file(std::string input_file) {
+safe_read_from_file(std::string input_file) {
     std::ifstream fin(input_file);
-    return read_program(fin);
+    return safe_read_program(fin);
+}
+
+inline Program<>
+fast_read_from_file(std::string input_file) {
+    std::ifstream fin(input_file);
+    return fast_read_program(fin);
 }
 
 inline void
-to_file(std::string output_file, const Program<>& prog) {
+write_to_file(std::string output_file, const Program<>& prog) {
     std::ofstream fout(output_file);
     fout << prog << std::endl;
 }
