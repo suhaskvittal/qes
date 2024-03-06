@@ -50,7 +50,7 @@ ParseNetwork<T>::recv_rule(rule_t r) {
     leaves = std::move(new_leaves);
 }
 
-template <class T> inline void
+template <class T> void
 ParseNetwork<T>::recv_token(Token tok) {
     // Assign token to the first leaf with the same token_type and
     // has not been assigned a value.
@@ -67,7 +67,7 @@ ParseNetwork<T>::recv_token(Token tok) {
 }
 
 template <class T>
-template <class FUNC> inline void
+template <class FUNC> void
 ParseNetwork<T>::apply_callback_bottom_up(FUNC fn) {
     std::deque<sptr<parse_node_t<T>>> node_list(leaves.begin(), leaves.end());
     std::set<sptr<parse_node_t<T>>> ready;

@@ -9,35 +9,11 @@
 namespace qes {
 
 template <class T, class U>
-Instruction<T, U>::Instruction()
-    :name(),
-    operands(),
-    annotations(),
-    property_map()
-{}
-
-template <class T, class U>
 Instruction<T, U>::Instruction(std::string name, std::vector<T> operands)
     :name(name),
     operands(operands),
     annotations(),
     property_map()
-{}
-
-template <class T, class U>
-Instruction<T, U>::Instruction(const Instruction<T, U>& other)
-    :name(other.name),
-    operands(other.operands),
-    annotations(other.annotations),
-    property_map(other.property_map)
-{}
-
-template <class T, class U>
-Instruction<T, U>::Instruction(Instruction<T, U>&& other)
-    :name(std::move(other.name)),
-    operands(std::move(other.operands)),
-    annotations(std::move(other.annotations)),
-    property_map(std::move(other.property_map))
 {}
 
 template <class T, class U>

@@ -26,10 +26,10 @@ typedef std::variant<int64_t, double, std::string> any_t;
 template <class OPERAND=any_t, class PROPERTY=any_t>
 class Instruction {
 public:
-    Instruction(void);
+    Instruction(void) = default;
     Instruction(std::string, std::vector<OPERAND>);
-    Instruction(const Instruction&);
-    Instruction(Instruction&&);
+    Instruction(const Instruction&) = default;
+    Instruction(Instruction&&) = default;
 
     template <class T>      Instruction(std::string, std::vector<T>);
     template <class ITER>   Instruction(std::string, ITER begin, ITER end);

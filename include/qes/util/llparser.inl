@@ -5,33 +5,6 @@
 
 namespace qes {
 
-inline rule_t
-LLParser::get_rule(token_type nt, token_type t) {
-    const rule_t BAD_RULE = { T_undefined };
-
-    auto& row = parsing_table[nt];
-    if (row.count(t)) {
-        if (row[t] == -1) {
-            return BAD_RULE;
-        } else {
-            return grammar[row[t]];
-        }
-    } else {
-        // We need to populate the entry.
-        for (size_t i = 0; i < grammar.size(); i++) {
-            rule_t& r = grammar[i];
-            if (r.lhs != nt) continue;
-            if (first(r.rhs).count(t) || (first(r.rhs).count(T_empty) && follow(r.lhs).count(t))) {
-                row[t] = i;
-                return r;
-            }
-        }
-        // Otherwise, the entry could not be populated.
-        row[t] = -1;
-        return BAD_RULE;
-    }
-}
-
 inline bool
 LLParser::is_nonterminal(token_type t) {
     return nonterminals.count(t);
