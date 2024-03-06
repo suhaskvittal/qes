@@ -25,7 +25,9 @@ namespace qes {
 Program<>   safe_read_from_file(std::string);
 Program<>   fast_read_from_file(std::string);
 
-void        write_to_file(std::string, const Program<>&);
+Program<>   from_file(std::string); // alias for fast_read_from_file.
+
+void        to_file(std::string, const Program<>&);
 
 std::ostream& operator<<(std::ostream&, const Instruction<>&);
 std::ostream& operator<<(std::ostream&, const Program<>&);

@@ -79,6 +79,7 @@ parse_in_property(std::string type, std::string val, parse_state_t& st) {
     if (st.in_property_awaiting_val) {
         if (type == "I_LITERAL" || type == "F_LITERAL" || type == "S_LITERAL") {
             st.property_map[st.property_name] = get_literal_val(type, val);
+            st.in_property_awaiting_val = false;
             return status_t::awaiting_token;
         } else {
             return status_t::invalid;
@@ -87,7 +88,7 @@ parse_in_property(std::string type, std::string val, parse_state_t& st) {
         if (type != "IDENTIFIER") {
             return status_t::invalid;
         } else {
-            st.property_name = type;
+            st.property_name = val;
             st.in_property_awaiting_val = true;
             return status_t::in_property;
         }

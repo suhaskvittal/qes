@@ -22,8 +22,13 @@ fast_read_from_file(std::string input_file) {
     return fast_read_program(fin);
 }
 
+inline Program<>
+from_file(std::string f) {
+    return fast_read_from_file(f);
+}
+
 inline void
-write_to_file(std::string output_file, const Program<>& prog) {
+to_file(std::string output_file, const Program<>& prog) {
     std::ofstream fout(output_file);
     fout << prog << std::endl;
 }

@@ -36,8 +36,6 @@ read_block(std::istream& fin, debug_state_t& st) {
         if (token_type == T_empty) continue;
         if (token_type == T_undefined) break;
         // Parse the token.
-        std::cout << "Found token " << token_val << " of type " << token_type << std::endl;
-        std::cout << "status = " << ((int) status) << std::endl;
         if (status == status_t::awaiting_token) {
             status = parse_awaiting_token(token_type, token_val, p_st);
         } else if (status == status_t::in_instruction) {
