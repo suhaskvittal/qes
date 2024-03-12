@@ -80,7 +80,6 @@ read_next_token(std::istream& fin, debug_state_t& st) {
     };
 
     const int found_none = 0,
-                found_attr = 1,
                 found_identifier = 2,
                 found_integer = 3,
                 found_float = 4,
@@ -92,7 +91,7 @@ read_next_token(std::istream& fin, debug_state_t& st) {
     std::string tok;
     while (!fin.eof()) {
         char c = fin.get();
-        if (c == EOF) {
+        if (fin.eof()) {
             return std::make_tuple(T_undefined, "");
         }
         // Update the debug state:
@@ -148,7 +147,8 @@ read_next_token(std::istream& fin, debug_state_t& st) {
             // If we find a character that does not match the current token type,
             // then place back the char and exit.
             if (status == found_none) {
-                std::cerr << "[ qes ] invalid character \"" << c << "\" detected at " << st << std::endl;
+                std::cerr << "[ qes ] invalid character \'" << c << "\'(" << (c+0) 
+                    << ") detected at " << st << std::endl;
                 exit(1);
             }
             fin.unget();
