@@ -1,0 +1,8 @@
+# Bell state preparation with bad measurement gate.
+#
+# (should fail)
+
+@annotation timing_error
+h       0;
+cx      0, 1;
+me@sure 0, 1;

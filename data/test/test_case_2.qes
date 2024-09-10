@@ -1,0 +1,8 @@
+# Bell state preparation with bad annotation
+#
+# (should fail)
+
+@annotation timing_error 0.01
+h       0;
+cx      0, 1;
+measure 0, 1;

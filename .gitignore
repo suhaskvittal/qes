@@ -1,0 +1,7 @@
+*/.DS_STORE
+build
+build/*
+Debug
+Debug/*
+Release
+Release/*

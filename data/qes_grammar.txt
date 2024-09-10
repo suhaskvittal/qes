@@ -1,0 +1,32 @@
+# Start production
+start = 
+        | line start
+        | KW_repeat "(" I_LITERAL ")" "{" start "}" start
+        ;
+# Line production
+line = "@" modifier line
+        | "(" IDENTIFIER ")" line
+        | instruction ";"
+        ;
+
+# Instruction production
+instruction = IDENTIFIER operands ;
+
+# Annotation/Property production
+modifier =  KW_annotation IDENTIFIER
+            | KW_property IDENTIFIER anyval
+            ;
+
+# Operands production
+operands =  anyval operands
+            | "," anyval operands
+            |
+            ;
+
+# Any value production
+anyval = IDENTIFIER
+            | I_LITERAL
+            | F_LITERAL
+            | S_LITERAL
+            ;
+

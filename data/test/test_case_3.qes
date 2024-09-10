@@ -1,0 +1,8 @@
+# Bell state preparation with bad semicolons
+#
+# (should fail)
+
+@annotation timing_error
+h       0;
+cx      0, 1
+measure 0, 1;

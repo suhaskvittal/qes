@@ -1,0 +1,4 @@
+call "foo";
+h 0;
+x 1;
+call "bar";

@@ -1,0 +1,11 @@
+LITERAL         \".+\"
+IDENTIFIER      [A-Za-z_]+
+^WHITESPACE     \s+
+^COMMENT        #.*\n
+
+(
+)
+=
+;
+|
+
